@@ -2,9 +2,7 @@ using Architecture.Impl.EFDatabase;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
-var config =  new ConfigurationBuilder()
-    .AddJsonFile("appsettings.json")
-    .Build();
+var config = builder.Configuration;
 
 // Add services to the container.
 builder.Services.AddRazorPages();

@@ -99,3 +99,5 @@ _[Ss]cripts
 *.json
 *.v2
 /Architecture/.vs/Architecture/DesignTimeBuild/.dtbcache.v2
+/Architecture/.vs/ProjectEvaluation/architecture.metadata.v7.bin
+/Architecture/.vs/ProjectEvaluation/architecture.projects.v7.bin
