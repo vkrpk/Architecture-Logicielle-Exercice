@@ -27,6 +27,7 @@ obj/
 TestResults/
 idea/
 vs/
+.idea
 ###################
 # Web publish log #
 ###################
