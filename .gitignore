@@ -76,3 +76,8 @@ _[Ss]cripts
 *.nupkg
 *.ncrunchsolution
 *.dot[Cc]over
+*.vsidx
+/.vs/dev/v17/.wsuo
+/.vs/VSWorkspaceState.json
+*.json
+*.v2
