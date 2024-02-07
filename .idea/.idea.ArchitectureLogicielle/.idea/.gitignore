@@ -2,6 +2,7 @@
 /shelf/
 /workspace.xml
 # Rider ignored files
+*.xml
 /modules.xml
 /.idea.ArchitectureLogicielle.iml
 /contentModel.xml
