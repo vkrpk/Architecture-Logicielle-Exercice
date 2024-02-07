@@ -5,12 +5,12 @@
         protected int Balance;
         protected string AccountNumber;
 
-        public int Debit(int amount)
+        public virtual int Debit(int amount)
         {
             Balance += amount;
             return Balance;
         }
-        public int Credit(int amount)
+        public virtual int Credit(int amount)
         {
             Balance -= amount;
             return Balance;
