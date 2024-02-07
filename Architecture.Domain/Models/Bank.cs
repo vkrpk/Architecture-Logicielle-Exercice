@@ -30,14 +30,15 @@
             // Get solde
         }
 
-        public float ConversionFromEuro(int euroAmount)
+        public void ConversionFromEuro(int euroAmount)
         {
             // Quelle monnaie ? 
+            // Doit renvoyer int
         }
 
-        public float ConversionToEuro(int amount)
+        public void ConversionToEuro(int amount)
         {
-
+            // Doit renvoyer int
         }
     }
 }

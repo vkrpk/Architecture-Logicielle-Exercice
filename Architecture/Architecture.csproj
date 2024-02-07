@@ -15,6 +15,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\Architecture.Domain\Architecture.Domain.csproj" />
+      <ProjectReference Include="..\Architecture.Impl.EFDatabase\Architecture.Impl.EFDatabase.csproj" />
     </ItemGroup>
 
     <ItemGroup>

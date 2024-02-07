@@ -98,3 +98,4 @@ _[Ss]cripts
 /.vs/VSWorkspaceState.json
 *.json
 *.v2
+/Architecture/.vs/Architecture/DesignTimeBuild/.dtbcache.v2
