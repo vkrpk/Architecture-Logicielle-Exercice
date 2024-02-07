@@ -75,3 +75,7 @@ _[Ss]cripts
 *.nupkg
 *.ncrunchsolution
 *.dot[Cc]over
+/.vs/dev/FileContentIndex/fdbf2177-2ca8-4fa7-bf8e-0f314ebad8d7.vsidx
+*.json
+/Architecture
+/.vs/dev/v17/.wsuo
