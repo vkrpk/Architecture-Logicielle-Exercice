@@ -7,5 +7,6 @@
         public string Name { get; set; }
         public Guid BankId { get; set; }
         public Bank Bank { get; set; }
+        public List<Account> Accounts { get; set; }
     }
 }

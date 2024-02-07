@@ -3,6 +3,7 @@
     public class Bank : BaseModel
     {
         public List<Customer>? Customers { get; set; }
+        public List<Account> Accounts { get; set; }
 
         public Bank() { }
         public void Withdrawal(string accountNumber, string clientName, int amount)
