@@ -82,3 +82,5 @@ _[Ss]cripts
 /Architecture/.vs/Architecture/FileContentIndex/f0982a6a-6863-4bdc-8e1d-fd2daec8c656.vsidx
 *.vsidx
 /Architecture/.vs/Architecture/FileContentIndex/350bf6c1-d2cd-40f2-aeb5-4c35a8531cd9.vsidx
+.idea
+.vs
