@@ -8,10 +8,10 @@ namespace Architecture.Impl.Repositories
 {
     internal interface IBankRepository
     {
-        public void Withdrawal(string accountNumber, string clientName, int amount);
-        public void Deposit(string accountNumber, string clientName, int amount);
+        public void Withdrawal(Guid accountNumber, string clientName, int amount);
+        public void Deposit(Guid accountNumber, string clientName, int amount);
         public void AccountOpening(string clientName);
-        public void Consultation(string accountNumber);
+        public int Consultation(Guid accountNumber);
 
         public float ConversionFromEuro(int euroAmount);
         public float ConversionToEuro(int amount);
