@@ -6,11 +6,7 @@ internal class Program
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        var config = builder.Configuration;
-
-        builder.Services.AddDbContext<AppDbContext>(options
-            => options.UseSqlServer(config.GetConnectionString("ConnectionString")));
-
+        
         // Add services to the container.
         builder.Services.AddRazorPages();
 
