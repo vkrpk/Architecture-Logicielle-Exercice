@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Architecture.Impl.Repositories
 {
-    internal class BankRepository
+    internal class BankRepository: IBankRepository
     {
 
         public void Withdrawal(string accountNumber, string clientName, int amount)

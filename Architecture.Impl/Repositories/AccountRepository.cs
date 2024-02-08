@@ -2,49 +2,75 @@
 using System.Collections.Generic;
 using System.Linq;
 using Architecture.Domain.Models;
-using Architecture.Impl.Services;
 using Microsoft.EntityFrameworkCore;
+using Architecture.Impl.EFDatabase;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Architecture.Impl.Repositories
 {
-    public class AccountRepository
+    public class AccountRepository: IAccountRepository
     {
         private readonly AppDbContext _context;
-        private IAccountService _accountService;
 
         public AccountRepository(AppDbContext context)
         {
             _context = context;
         }
 
-        public Account getAccountById(Guid id)
+        public Account getAccountById(Guid accountId)
         {
-            return _context.Accounts.Find(id);
+            try
+            {
+                return _context.Accounts.Find(accountId);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Impossible de trouver le compte avec l'ID {accountId}.", ex);
+            }
         }
 
-        public void Add(Account account)
+        public List<Account> getAllAccounts()
+        {
+            return _context.Accounts.ToList();
+
+        }
+
+        public Account createAccount(Account account)
         {
             _context.Add(account);
             _context.SaveChanges();
+
+            return account;
         }
 
-        public void Update(Account account)
+        public Account updateAccount(Guid accountId, Account account)
         {
             _context.Accounts.Update(account);
             _context.SaveChanges();
+
+            return account;
         }
 
-        public void Delete(Account account)
+        public string deleteAccount(Guid accountId)
         {
+            Account account = getAccountById(accountId);
             _context.Accounts.Remove(account);
             _context.SaveChanges();
+
+            return "Account " + accountId + " supprimé avec succès";
         }
 
-
-
-        public IEnumerable<Account> GetAll()
+        public int Debit(int amount, Account account)
         {
-            return _context.Accounts.ToList();
+            account.Balance -= amount;
+            return account.Balance;
         }
+
+        public int Credit(int amount, Account account)
+        {
+            account.Balance += amount;
+            return account.Balance;
+        }
+
     }
 }
