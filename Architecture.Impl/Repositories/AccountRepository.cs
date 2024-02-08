@@ -5,6 +5,8 @@ using Architecture.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Architecture.Impl.EFDatabase;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Identity.Client;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Architecture.Impl.Repositories
 {
@@ -21,11 +23,25 @@ namespace Architecture.Impl.Repositories
         {
             try
             {
-                return _context.Accounts.Find(accountId);
+                return _context.Accounts.Include(a => a.Customer)
+                    .FirstOrDefault(a => a.Id == accountId);
             }
             catch (Exception ex)
             {
                 throw new Exception($"Impossible de trouver le compte avec l'ID {accountId}.", ex);
+            }
+        }
+
+        public Account getAccountByNumber(Guid accountNumber) 
+        {
+            try
+            {
+                return _context.Accounts.Include(a => a.Customer)
+                    .FirstOrDefault(a => a.AccountNumber == accountNumber);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Impossible de trouver le compte avec le numéro de compte {accountNumber}.", ex);
             }
         }
 
@@ -37,18 +53,18 @@ namespace Architecture.Impl.Repositories
 
         public Account createAccount(Account account)
         {
-            _context.Add(account);
+            EntityEntry<Account> createdAccount = _context.Accounts.Add(account);
             _context.SaveChanges();
 
-            return account;
+            return createdAccount.Entity;
         }
 
         public Account updateAccount(Guid accountId, Account account)
         {
-            _context.Accounts.Update(account);
+            EntityEntry<Account> updatedAccount = _context.Accounts.Update(account);
             _context.SaveChanges();
 
-            return account;
+            return updatedAccount.Entity;
         }
 
         public string deleteAccount(Guid accountId)

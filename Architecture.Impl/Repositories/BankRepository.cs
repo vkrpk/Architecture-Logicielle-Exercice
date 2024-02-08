@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Architecture.Domain.Models;
+using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,29 +10,50 @@ namespace Architecture.Impl.Repositories
 {
     internal class BankRepository: IBankRepository
     {
+        public readonly IAccountRepository _accountRepository;
+        public readonly ICustomerRepository _customerRepository;
 
-        public void Withdrawal(string accountNumber, string clientName, int amount)
+        public BankRepository(IAccountRepository accountRepository, ICustomerRepository customerRepository)
         {
-            // besoin d'un get account by account number 
-            // check si le client correspond ? 
-            // Retirer l'argent du solde
+            _accountRepository = accountRepository;
+            _customerRepository = customerRepository;
         }
-        public void Deposit(string accountNumber, string clientName, int amount)
+
+        public void Withdrawal(Guid accountNumber, string clientName, int amount)
         {
-            // besoin d'un get account by account number 
-            // check si le client correspond ? 
-            // Ajouter l'argent sur le solde
+            Account account = _accountRepository.getAccountByNumber(accountNumber);
+
+            if (account.Customer.Name == clientName)
+            {
+                _accountRepository.Debit(amount, account);
+            }
         }
+
+        public void Deposit(Guid accountNumber, string clientName, int amount)
+        {
+            Account account = _accountRepository.getAccountByNumber(accountNumber);
+
+            if (account.Customer.Name == clientName)
+            {
+                _accountRepository.Credit(amount, account);
+            }
+        }
+
         public void AccountOpening(string clientName)
         {
+            Customer customer = _customerRepository.getCustomerByClientName(clientName);
+            if (customer != null) 
+            {
+                
+            }
             // get client by clientName
             // créer un nouveau compte avec le client
         }
 
-        public void Consultation(string accountNumber)
+        public int Consultation(Guid accountNumber)
         {
-            // Get account by accountNumber
-            // Get solde
+            Account account = _accountRepository.getAccountByNumber(accountNumber);
+            return account.Balance;
         }
 
         public float ConversionFromEuro(int euroAmount)
