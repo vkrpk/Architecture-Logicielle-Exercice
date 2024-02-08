@@ -11,6 +11,7 @@
       <Content Include="..\.dockerignore">
         <Link>.dockerignore</Link>
       </Content>
+      <Content Remove="ArchitectureDomainTests\**" />
     </ItemGroup>
 
     <ItemGroup>
@@ -25,6 +26,27 @@
         <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       </PackageReference>
       <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Remove="ArchitectureDomainTests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <EmbeddedResource Remove="ArchitectureDomainTests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="ArchitectureDomainTests\**" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="ArchitectureDomainTests\bin\Debug\net8.0\ArchitectureDomainTests.deps.json" />
+      <_ContentIncludedByDefault Remove="ArchitectureDomainTests\bin\Debug\net8.0\ArchitectureDomainTests.runtimeconfig.json" />
+      <_ContentIncludedByDefault Remove="ArchitectureDomainTests\obj\ArchitectureDomainTests.csproj.nuget.dgspec.json" />
+      <_ContentIncludedByDefault Remove="ArchitectureDomainTests\obj\Debug\net8.0\ArchitectureDomainTests.sourcelink.json" />
+      <_ContentIncludedByDefault Remove="ArchitectureDomainTests\obj\project.assets.json" />
+      <_ContentIncludedByDefault Remove="ArchitectureDomainTests\obj\project.packagespec.json" />
     </ItemGroup>
 
 </Project>
