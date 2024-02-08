@@ -4,8 +4,8 @@
     {
         public override int Debit(int amount)
         {
-            if (amount < base.Balance)
-                return base.Debit(amount);
+            if (amount <= base.Balance)
+                return base.Balance - amount;
             else
                 throw new OverdraftException("You don't have enough money");
         }
