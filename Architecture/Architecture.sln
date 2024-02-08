@@ -9,8 +9,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Architecture.Domain", "..\A
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Architecture.Impl.EFDatabase", "..\Architecture.Impl.EFDatabase\Architecture.Impl.EFDatabase.csproj", "{C9BC71B0-569F-4BB1-9846-28D6FF2ACA26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Architecture.WebService", "..\Architecture.WebService\Architecture.WebService.csproj", "{6EB406EE-DCE9-4D72-8927-84FF8F5AD5A1}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,10 +27,6 @@ Global
 		{C9BC71B0-569F-4BB1-9846-28D6FF2ACA26}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C9BC71B0-569F-4BB1-9846-28D6FF2ACA26}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C9BC71B0-569F-4BB1-9846-28D6FF2ACA26}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6EB406EE-DCE9-4D72-8927-84FF8F5AD5A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6EB406EE-DCE9-4D72-8927-84FF8F5AD5A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6EB406EE-DCE9-4D72-8927-84FF8F5AD5A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6EB406EE-DCE9-4D72-8927-84FF8F5AD5A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
