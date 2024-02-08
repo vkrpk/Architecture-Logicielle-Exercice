@@ -7,4 +7,9 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Architecture.Domain\Architecture.Domain.csproj" />
+    <ProjectReference Include="..\Architecture\Architecture.csproj" />
+  </ItemGroup>
+
 </Project>

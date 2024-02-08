@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Architecture.Impl.Repositories
 {
-    internal class NoOverdraftAccount: AccountRepository
+    internal class NoOverdraftAccountRepository: AccountRepository
     {
         public override int Debit(int amount)
         {
