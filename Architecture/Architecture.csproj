@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
         <TargetFramework>net8.0</TargetFramework>
@@ -16,10 +16,6 @@
     <ItemGroup>
       <ProjectReference Include="..\Architecture.Domain\Architecture.Domain.csproj" />
       <ProjectReference Include="..\Architecture.Impl.EFDatabase\Architecture.Impl.EFDatabase.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Controllers\" />
     </ItemGroup>
 
     <ItemGroup>
