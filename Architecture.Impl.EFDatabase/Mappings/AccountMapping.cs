@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Architecture.Impl.EFDatabase.Mappings
 {
-    public class AccountMapping : IEntityTypeConfiguration<Account>
+    internal static class AccountMapping 
     {
-        public void Configure(EntityTypeBuilder<Account> builder)
+        public static EntityTypeBuilder MapAccount(this ModelBuilder modelbuilder)
         {
-            builder.HasKey(a => a.Id);
+            var builder = modelbuilder.GetBaseModelBuilder<Account>();
 
             builder
                 .HasOne(a => a.Customer)
@@ -22,6 +22,7 @@ namespace Architecture.Impl.EFDatabase.Mappings
                 .HasForeignKey(a => a.BankId)
                 .IsRequired();
 
+            return builder;
         }
     }
 }

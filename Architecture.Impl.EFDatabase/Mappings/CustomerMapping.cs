@@ -5,11 +5,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Architecture.Impl.EFDatabase.Mappings
 {
-    public class CustomerMapping : IEntityTypeConfiguration<Customer>
+    internal static class CustomerMapping 
     {
-        public void Configure(EntityTypeBuilder<Customer> builder)
+        public static EntityTypeBuilder MapCustomer(this ModelBuilder modelbuilder)
         {
-            builder.HasKey(c => c.Id);
+            var builder = modelbuilder.GetBaseModelBuilder<Customer>();
 
             builder.Property(c => c.Name).HasMaxLength(Consts.MaxNameLength).IsRequired();
             builder.Property(c => c.ClientNumber).IsRequired();
@@ -22,6 +22,8 @@ namespace Architecture.Impl.EFDatabase.Mappings
             builder.HasOne(c => c.Bank)
                  .WithMany(a => a.Customers)
                  .HasForeignKey(c => c.BankId);
+
+            return builder;
         }
     }
 }

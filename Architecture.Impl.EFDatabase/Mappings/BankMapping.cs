@@ -1,15 +1,14 @@
 ﻿using Architecture.Domain.Models;
-using Architecture.Domain;
-using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Architecture.Impl.EFDatabase.Mappings
 {
-    public class BankMapping : IEntityTypeConfiguration<Bank>
+    internal static class BankMapping
     {
-        public void Configure(EntityTypeBuilder<Bank> builder)
+        public static EntityTypeBuilder MapBank(this ModelBuilder modelbuilder)
         {
-            builder.HasKey(b => b.Id);
+            var builder = modelbuilder.GetBaseModelBuilder<Bank>();
 
             builder
                 .HasMany(b => b.Customers)
@@ -20,6 +19,8 @@ namespace Architecture.Impl.EFDatabase.Mappings
                 .HasMany(b => b.Accounts)
                 .WithOne(a => a.Bank)
                 .HasForeignKey(a => a.BankId);
+
+            return builder;
 
         }
     }
