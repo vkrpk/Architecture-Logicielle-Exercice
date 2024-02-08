@@ -2,22 +2,19 @@
 {
     public abstract class Account : BaseModel
     {
-        protected int Balance;
-        protected string AccountNumber;
+        public int Balance;
+        public Guid AccountNumber;
         public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }
         public Guid BankId { get; set; }
         public Bank Bank { get; set; }
 
-        public virtual int Debit(int amount)
+        public Account(Customer customer, Bank bank, Guid accountNumber) 
         {
-            Balance -= amount;
-            return Balance;
+            Customer = customer;
+            Bank = Bank;
+            AccountNumber = accountNumber;
         }
-        public virtual int Credit(int amount)
-        {
-            Balance += amount;
-            return Balance;
-        }
+
     }
 }

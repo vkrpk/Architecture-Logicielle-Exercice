@@ -10,6 +10,10 @@ namespace Architecture.Impl.EFDatabase.Mappings
         {
             var builder = modelbuilder.GetBaseModelBuilder<Account>();
 
+            builder.Property(e => e.AccountNumber)
+            .ValueGeneratedOnAdd()
+            .HasDefaultValueSql("NEWSEQUENTIALID()");
+
             builder
                 .HasOne(a => a.Customer)
                 .WithMany(c => c.Accounts)
