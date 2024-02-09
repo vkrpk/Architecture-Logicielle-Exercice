@@ -15,12 +15,12 @@ namespace Architecture.Impl.Repositories
             _context = context;
         }
 
-        public async Task<Account> getAccountById(Guid accountId)
+        public Account getAccountById(Guid accountId)
         {
             try
             {
-                return await _context.Accounts.Include(a => a.Customer)
-                    .FirstAsync(a => a.Id == accountId);
+                return _context.Accounts.Include(a => a.Customer)
+                    .First(a => a.Id == accountId);
             }
             catch (Exception ex)
             {
@@ -28,12 +28,12 @@ namespace Architecture.Impl.Repositories
             }
         }
 
-        public async Task<Account> getAccountByNumber(Guid accountNumber) 
+        public Account getAccountByNumber(Guid accountNumber) 
         {
             try
             {
-                return await _context.Accounts.Include(a => a.Customer)
-                    .FirstAsync(a => a.AccountNumber == accountNumber);
+                return _context.Accounts.Include(a => a.Customer)
+                    .First(a => a.AccountNumber == accountNumber);
             }
             catch (Exception ex)
             {
@@ -41,12 +41,12 @@ namespace Architecture.Impl.Repositories
             }
         }
 
-        public async Task<List<Account>> getAllAccounts()
+        public List<Account> getAllAccounts()
         {
-            return await _context.Accounts.ToListAsync();
+            return _context.Accounts.ToList();
         }
 
-        public async Task<Account> createAccount(Customer customer, bool isOverdraftAllowed)
+        public Account createAccount(Customer customer, bool isOverdraftAllowed)
         {
             Account newAccount;
             if(isOverdraftAllowed)
@@ -55,53 +55,53 @@ namespace Architecture.Impl.Repositories
                 newAccount = new NoOverdraftAccount();
 
             EntityEntry<Account> createdAccount = _context.Accounts.Add(newAccount);
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
 
             return createdAccount.Entity;
         }
 
-        public async Task<Account> updateAccount(Account account)
+        public Account updateAccount(Account account)
         {
-            var entity = await _context.Accounts.FindAsync(account.Id);
+            var entity = _context.Accounts.FindAsync(account.Id);
             _context.Entry(entity).CurrentValues.SetValues(account);
             EntityEntry<Account> updatedAccount = _context.Accounts.Update(account);
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
 
             return updatedAccount.Entity;
         }
 
-        public async Task<string> deleteAccount(Guid accountId)
+        public string deleteAccount(Guid accountId)
         {
-            Account account = await getAccountById(accountId);
+            Account account = getAccountById(accountId);
             _context.Accounts.Remove(account);
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
 
             return "Account " + accountId + " supprimé avec succès";
         }
 
-        public async virtual Task<int> Debit(int amount, Account account)
+        public virtual int Debit(int amount, Account account)
         {
             account.Balance -= amount;
             _context.Accounts.Update(account);
 
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
 
             return account.Balance;
         }
 
-        public async Task<int> Credit(int amount, Account account)
+        public int Credit(int amount, Account account)
         {
             account.Balance += amount;
 
             _context.Accounts.Update(account);
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
 
             return account.Balance;
         }
 
-        public async Task<List<Account>> getAccountsByCustomer(Customer customer)
+        public List<Account> getAccountsByCustomer(Customer customer)
         {
-            return await _context.Accounts.Where(a => a.CustomerId == customer.Id).ToListAsync();
+            return _context.Accounts.Where(a => a.CustomerId == customer.Id).ToList();
         }
     }
 }

@@ -4,14 +4,14 @@ namespace Architecture.Impl.Repositories
 {
     public interface IAccountRepository
     {
-        Task<Account> getAccountById(Guid accountId);
-        Task<Account> getAccountByNumber(Guid accountNumber);
-        Task<List<Account>> getAllAccounts();
-        Task<List<Account>> getAccountsByCustomer(Customer customer);
-        Task<Account> createAccount(Customer customer, bool isOverdraftAllowed);
-        Task<Account> updateAccount(Account account);
-        Task<string> deleteAccount(Guid accountId);
-        Task<int> Debit(int amount, Account account);
-        Task<int> Credit(int amount, Account account);
+        Account getAccountById(Guid accountId);
+        Account getAccountByNumber(Guid accountNumber);
+        List<Account> getAllAccounts();
+        List<Account> getAccountsByCustomer(Customer customer);
+        Account createAccount(Customer customer, bool isOverdraftAllowed);
+        Account updateAccount(Account account);
+        string deleteAccount(Guid accountId);
+        int Debit(int amount, Account account);
+        int Credit(int amount, Account account);
     }
 }

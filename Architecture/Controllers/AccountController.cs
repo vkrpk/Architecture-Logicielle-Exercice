@@ -22,9 +22,9 @@ namespace DefaultNamespace
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAccounts()
+        public IActionResult GetAccounts()
         {
-            List<Account> accounts = await _accountRepo.getAllAccounts();
+            List<Account> accounts = _accountRepo.getAllAccounts();
 
             if (accounts == null)
                 return NotFound();
@@ -33,9 +33,9 @@ namespace DefaultNamespace
         }
 
         [HttpGet("byId/{accountId}")]
-        public async Task<IActionResult> GetAccountById(Guid accountId)
+        public IActionResult GetAccountById(Guid accountId)
         {
-            Account account = await _accountRepo.getAccountById(accountId);
+            Account account = _accountRepo.getAccountById(accountId);
 
             if (account == null)
                 return NotFound();
@@ -44,22 +44,22 @@ namespace DefaultNamespace
         }
 
         [HttpGet("byCustomer/{customerName}")]
-        public async Task<IActionResult> GetAccountsByCustomer(string customerName)
+        public IActionResult GetAccountsByCustomer(string customerName)
         {
-            Customer customer = await _customerRepo.getCustomerByClientName(customerName);
+            Customer customer = _customerRepo.getCustomerByClientName(customerName);
             if (customer == null)
                 return NotFound();
             else
             {
-                List<Account> accounts = await _accountRepo.getAccountsByCustomer(customer);
+                List<Account> accounts = _accountRepo.getAccountsByCustomer(customer);
                 return Ok(accounts);
             }
         }
 
         [HttpPost("{amount}")]
-        public async Task<IActionResult> DebitAccount(int amount, [FromBody] Guid accountId)
+        public IActionResult DebitAccount(int amount, [FromBody] Guid accountId)
         {
-            Account account = await _accountRepo.getAccountById(accountId);
+            Account account = _accountRepo.getAccountById(accountId);
             if (account.IsOverdraftAllowed)
                 DebitAccount<OverdraftAccount>(amount, account);
             else
