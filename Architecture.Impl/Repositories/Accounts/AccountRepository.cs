@@ -53,9 +53,9 @@ namespace Architecture.Impl.Repositories
         {
             Account newAccount;
             if(isOverdraftAllowed)
-                newAccount = new OverdraftAccount(customer);
+                newAccount = new OverdraftAccount();
             else 
-                newAccount = new NoOverdraftAccount(customer);
+                newAccount = new NoOverdraftAccount();
 
             EntityEntry<Account> createdAccount = _context.Accounts.Add(newAccount);
             _context.SaveChanges();
