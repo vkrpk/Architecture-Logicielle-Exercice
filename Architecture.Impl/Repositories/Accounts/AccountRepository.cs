@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Architecture.Impl.Repositories
 {
-    public abstract class AccountRepository : IAccountRepository
+    public class AccountRepository : IAccountRepository
     {
         private readonly AppDbContext _context;
 

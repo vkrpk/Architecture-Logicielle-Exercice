@@ -12,7 +12,7 @@ namespace Architecture.Impl.EFDatabase
         public DbSet<NoOverdraftAccount> NoOverdraftAccounts { get; set; }
         public DbSet<Customer> Customers { get; set; }
 
-        public AppDbContext() 
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) 
         {
             Banks = Set<Bank>();
             Accounts = Set<Account>();
@@ -22,8 +22,8 @@ namespace Architecture.Impl.EFDatabase
 
         }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer("Server=localhost;Database=ArchitectureDB;Trusted_Connection=True;");
+        //protected override void OnConfiguring(DbContextOptionsBuilder options)
+        //    => options.UseSqlServer("Server=localhost;Database=ArchitectureDB;Trusted_Connection=True;");
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
