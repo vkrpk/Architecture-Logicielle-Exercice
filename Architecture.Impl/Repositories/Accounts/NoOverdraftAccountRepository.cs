@@ -7,13 +7,13 @@ namespace Architecture.Impl.Repositories
 {
     public class NoOverdraftAccountRepository(AppDbContext context) : AccountRepository(context), INoOverdraftAccountRepository
     {
-        public async override Task<int> Debit(int amount, Account account)
+        public override int Debit(int amount, Account account)
         {
             if (amount <= account.Balance)
             {
                 account.Balance -= amount;
 
-                await updateAccount(account);
+                updateAccount(account);
 
                 return account.Balance;
             }

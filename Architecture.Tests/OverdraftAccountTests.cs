@@ -21,24 +21,24 @@ namespace Architecture.Tests
         }
 
         [TestMethod]
-        public async Task CreditOverdraftAccountNominalTest()
+        public void CreditOverdraftAccountNominalTest()
         {
-            var result = await _mockOverdraftAccountRepository.Credit(100, _overdraftAccount);
+            var result = _mockOverdraftAccountRepository.Credit(100, _overdraftAccount);
             Assert.AreEqual(100, result);
         }
 
         [TestMethod]
-        public async Task DebitOverdraftAccountNominalTest()
+        public void DebitOverdraftAccountNominalTest()
         {
-            var result = await _mockOverdraftAccountRepository.Debit(100, _overdraftAccount);
+            var result = _mockOverdraftAccountRepository.Debit(100, _overdraftAccount);
             Assert.AreEqual(-100, result);
         }
 
         [TestMethod]
-        public async Task DebitOverdraftAccountNegativeBalanceTest()
+        public void DebitOverdraftAccountNegativeBalanceTest()
         {
-            await _mockOverdraftAccountRepository.Credit(100, _overdraftAccount);
-            var result = await _mockOverdraftAccountRepository.Debit(100, _overdraftAccount);
+            _mockOverdraftAccountRepository.Credit(100, _overdraftAccount);
+            var result = _mockOverdraftAccountRepository.Debit(100, _overdraftAccount);
             Assert.AreEqual(0, result);
         }
     }
