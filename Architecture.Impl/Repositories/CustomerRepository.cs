@@ -14,29 +14,29 @@ namespace Architecture.Impl.Repositories
             _context = context;
         }
 
-        public async Task<Customer> createCustomer(Customer customer)
+        public Customer createCustomer(Customer customer)
         {
             EntityEntry<Customer> createdCustomer = _context.Customers.Add(customer);
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
 
             return createdCustomer.Entity;
         }
 
-        public async Task<string> deleteCustomer(Guid customerId)
+        public string deleteCustomer(Guid customerId)
         {
-            Customer customer = await getCustomerById(customerId);
+            Customer customer = getCustomerById(customerId);
             _context.Customers.Remove(customer);
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
 
             return "Customer " + customerId + " supprimé avec succès";
         }
 
-        public async Task<List<Customer>> getAllCustomer()
+        public List<Customer> getAllCustomer()
         {
-            return await _context.Customers.ToListAsync();
+            return _context.Customers.ToList();
         }
 
-        public async Task<Customer> getCustomerByClientName(string clientName)
+        public Customer getCustomerByClientName(string clientName)
         {
             try
             {
@@ -49,12 +49,12 @@ namespace Architecture.Impl.Repositories
             }
         }
 
-        public async Task<Customer> getCustomerById(Guid customerId)
+        public Customer getCustomerById(Guid customerId)
         {
             try
             {
-                return await _context.Customers.Include(a => a.Accounts)
-                    .FirstAsync(a => a.Id == customerId);
+                return _context.Customers.Include(a => a.Accounts)
+                    .First(a => a.Id == customerId);
             }
             catch (Exception ex)
             {
@@ -74,14 +74,14 @@ namespace Architecture.Impl.Repositories
             }
         }
 
-        public async Task<Customer> updateCustomer(Customer customer)
+        public Customer updateCustomer(Customer customer)
         {
-            var entity = await _context.Customers.FindAsync(customer.Id);
+            var entity = _context.Customers.Find(customer.Id);
             _context.Entry(entity).CurrentValues
                 .SetValues(customer);
 
             EntityEntry<Customer> updatedCustomer = _context.Customers.Update(customer);
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
 
             return updatedCustomer.Entity;
         }

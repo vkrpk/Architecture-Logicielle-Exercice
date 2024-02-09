@@ -16,9 +16,9 @@ public class CustomerController : Controller
     }
 
     [HttpGet("{customerId}")]
-    public async Task<IActionResult> getCustomerById(Guid customerId)
+    public IActionResult getCustomerById(Guid customerId)
     {
-        Customer customer = await _customerRepository.getCustomerById(customerId);
+        Customer customer = _customerRepository.getCustomerById(customerId);
 
         if (customer == null)
         {
@@ -29,9 +29,9 @@ public class CustomerController : Controller
     }
 
     [HttpGet("{clientName}")]
-    public async Task<IActionResult> getCustomerByName(string clientName)
+    public IActionResult getCustomerByName(string clientName)
     {
-        Customer customer = await _customerRepository.getCustomerByClientName(clientName);
+        Customer customer = _customerRepository.getCustomerByClientName(clientName);
 
         if (customer == null)
         {
@@ -42,9 +42,9 @@ public class CustomerController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> getAllCustomers()
+    public IActionResult getAllCustomers()
     {
-        List<Customer> customerArray = await _customerRepository.getAllCustomer();
+        List<Customer> customerArray = _customerRepository.getAllCustomer();
 
         if (customerArray == null)
         {
@@ -55,9 +55,10 @@ public class CustomerController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> createCustomer(Customer customer)
+    public IActionResult createCustomer(Customer customer)
     {
-        Customer _customer = await _customerRepository.createCustomer(customer);
+        Customer 
+            _customer = _customerRepository.createCustomer(customer);
 
         if (_customer == null)
         {
@@ -68,9 +69,9 @@ public class CustomerController : Controller
     }
 
     [HttpPut("{customerId}")]
-    public async Task<IActionResult> updateCustomer(Customer customer)
+    public IActionResult updateCustomer(Customer customer)
     {
-        Customer _customer = await _customerRepository.updateCustomer(customer);
+        Customer _customer = _customerRepository.updateCustomer(customer);
 
         if (customer == null)
         {
@@ -81,9 +82,9 @@ public class CustomerController : Controller
     }
 
     [HttpDelete("{customerId}")]
-    public async Task<IActionResult> deleteCustomer(Guid customerId)
+    public IActionResult deleteCustomer(Guid customerId)
     {
-        string deletedCustomer = await _customerRepository.deleteCustomer(customerId);
+        string deletedCustomer = _customerRepository.deleteCustomer(customerId);
 
         if (deletedCustomer == null)
         {
