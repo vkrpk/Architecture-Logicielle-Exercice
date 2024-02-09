@@ -18,12 +18,14 @@ namespace Architecture.Impl.EFDatabase.Mappings
                 .HasOne(a => a.Customer)
                 .WithMany(c => c.Accounts)
                 .HasForeignKey(a => a.CustomerId)
+                .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
 
             builder
                 .HasOne(a => a.Bank)
                 .WithMany(b => b.Accounts)
                 .HasForeignKey(a => a.BankId)
+                .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
 
             return builder;
