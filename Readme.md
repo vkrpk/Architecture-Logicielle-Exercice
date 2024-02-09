@@ -19,11 +19,11 @@ Swagger a été utilisé pour documenter et avoir une interface sur laquelle tes
 
 L'Arborescence de cette application est organisée comme suit : 
 
-    - Architecture : Projet Web contenant les Contrôleurs
-    - Architecture.Domain : Projet Librairie contenant les Modèles
-    - Architecture.Impl : Projet Librairie contenant les Repositories
-    - Architecture.Impl.EFDatabase : Projet Librairie contenant la classe implémentée pour la base de données, les mappings et les migrations avec EF Core
-    - Architecture.Tests : Projet de tests MS Tests. 
+- Architecture : Projet Web contenant les Contrôleurs
+- Architecture.Domain : Projet Librairie contenant les Modèles
+- Architecture.Impl : Projet Librairie contenant les Repositories
+- Architecture.Impl.EFDatabase : Projet Librairie contenant la classe implémentée pour la base de données, les mappings et les migrations avec EF Core
+- Architecture.Tests : Projet de tests MS Tests. 
 
 ## Informations sur les tests :
 
