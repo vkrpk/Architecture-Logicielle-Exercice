@@ -45,10 +45,6 @@ namespace Architecture.Impl.Repositories
         {
             return await _context.Accounts.ToListAsync();
         }
-        public List<Account> getAccountsByCustomer(Customer customer)
-        {
-            return _context.Accounts.Where(a => a.CustomerId == customer.Id).ToList();
-        }
 
         public async Task<Account> createAccount(Customer customer, bool isOverdraftAllowed)
         {
