@@ -17,7 +17,7 @@ namespace Architecture.Impl.Repositories
         public Customer createCustomer(Customer customer)
         {
             EntityEntry<Customer> createdCustomer = _context.Customers.Add(customer);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return createdCustomer.Entity;
         }
@@ -26,7 +26,7 @@ namespace Architecture.Impl.Repositories
         {
             Customer customer = getCustomerById(customerId);
             _context.Customers.Remove(customer);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return "Customer " + customerId + " supprimé avec succès";
         }
@@ -81,7 +81,7 @@ namespace Architecture.Impl.Repositories
                 .SetValues(customer);
 
             EntityEntry<Customer> updatedCustomer = _context.Customers.Update(customer);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return updatedCustomer.Entity;
         }

@@ -55,17 +55,17 @@ namespace Architecture.Impl.Repositories
                 newAccount = new NoOverdraftAccount();
 
             EntityEntry<Account> createdAccount = _context.Accounts.Add(newAccount);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return createdAccount.Entity;
         }
 
         public Account updateAccount(Account account)
         {
-            var entity = _context.Accounts.FindAsync(account.Id);
+            var entity = _context.Accounts.Find(account.Id);
             _context.Entry(entity).CurrentValues.SetValues(account);
             EntityEntry<Account> updatedAccount = _context.Accounts.Update(account);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return updatedAccount.Entity;
         }
@@ -74,7 +74,7 @@ namespace Architecture.Impl.Repositories
         {
             Account account = getAccountById(accountId);
             _context.Accounts.Remove(account);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return "Account " + accountId + " supprimé avec succès";
         }
@@ -84,7 +84,7 @@ namespace Architecture.Impl.Repositories
             account.Balance -= amount;
             _context.Accounts.Update(account);
 
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return account.Balance;
         }
@@ -94,7 +94,7 @@ namespace Architecture.Impl.Repositories
             account.Balance += amount;
 
             _context.Accounts.Update(account);
-            _context.SaveChangesAsync();
+            _context.SaveChanges();
 
             return account.Balance;
         }
