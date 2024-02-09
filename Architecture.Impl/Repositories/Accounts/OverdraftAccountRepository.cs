@@ -10,9 +10,12 @@ namespace Architecture.Impl.Repositories
 {
     public class OverdraftAccountRepository(AppDbContext context) : AccountRepository(context), IOverdraftAccountRepository
     {
-        public override int Debit(int amount, Account account)
+        public async override Task<int> Debit(int amount, Account account)
     {
             account.Balance -= amount;
+
+            await updateAccount(account);
+
             return account.Balance;
 
         }
