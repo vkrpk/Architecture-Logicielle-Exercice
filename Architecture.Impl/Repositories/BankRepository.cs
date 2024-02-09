@@ -13,38 +13,38 @@ namespace Architecture.Impl.Repositories
             _customerRepository = customerRepository;
         }
 
-        public async Task Withdrawal(Guid accountNumber, string clientName, int amount)
+        public void Withdrawal(Guid accountNumber, string clientName, int amount)
         {
-            Account account = await _accountRepository.getAccountByNumber(accountNumber);
+            Account account = _accountRepository.getAccountByNumber(accountNumber);
 
             if (account.Customer.Name == clientName)
             {
-               await _accountRepository.Debit(amount, account);
+               _accountRepository.Debit(amount, account);
             }
         }
 
-        public async Task Deposit(Guid accountNumber, string clientName, int amount)
+        public void Deposit(Guid accountNumber, string clientName, int amount)
         {
-            Account account = await _accountRepository.getAccountByNumber(accountNumber);
+            Account account = _accountRepository.getAccountByNumber(accountNumber);
 
             if (account.Customer.Name == clientName)
             {
-                await _accountRepository.Credit(amount, account);
+                _accountRepository.Credit(amount, account);
             }
         }
 
-        public async Task AccountOpening(string clientName, bool isOverdraftAllowed)
+        public void AccountOpening(string clientName, bool isOverdraftAllowed)
         {
-            Customer customer = await _customerRepository.getCustomerByClientName(clientName);
+            Customer customer = _customerRepository.getCustomerByClientName(clientName);
             if (customer != null) 
             {
-                await _accountRepository.createAccount(customer, isOverdraftAllowed);
+                _accountRepository.createAccount(customer, isOverdraftAllowed);
             }
         }
 
-        public async Task<int> Consultation(Guid accountNumber)
+        public int Consultation(Guid accountNumber)
         {
-            Account account = await _accountRepository.getAccountByNumber(accountNumber);
+            Account account = _accountRepository.getAccountByNumber(accountNumber);
             return account.Balance;
         }
 

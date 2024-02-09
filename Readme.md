@@ -1,4 +1,4 @@
-Ce fichier README a été généré le [08/02/2024] par [Groupe 1 : Arthur | Hervé | Laurine | Victor].
+Ce fichier README a été généré le 08/02/2024 par le Groupe 1 : Arthur | Hervé | Laurine | Victor.
 
 Dernière mise-à-jour le : [08/02/2024].
 
@@ -19,11 +19,11 @@ Swagger a été utilisé pour documenter et avoir une interface sur laquelle tes
 
 L'Arborescence de cette application est organisée comme suit : 
 
-    - Architecture : Projet Web contenant les Contrôleurs
-    - Architecture.Domain : Projet Librairie contenant les Modèles
-    - Architecture.Impl : Projet Librairie contenant les Repositories
-    - Architecture.Impl.EFDatabase : Projet Librairie contenant la classe implémentée pour la base de données, les mappings et les migrations avec EF Core
-    - Architecture.Tests : Projet de tests MS Tests. 
+- Architecture : Projet Web contenant les Contrôleurs
+- Architecture.Domain : Projet Librairie contenant les Modèles
+- Architecture.Impl : Projet Librairie contenant les Repositories
+- Architecture.Impl.EFDatabase : Projet Librairie contenant la classe implémentée pour la base de données, les mappings et les migrations avec EF Core
+- Architecture.Tests : Projet de tests MS Tests. 
 
 ## Informations sur les tests :
 
