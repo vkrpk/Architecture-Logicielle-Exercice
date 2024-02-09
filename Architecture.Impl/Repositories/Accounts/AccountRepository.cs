@@ -90,7 +90,7 @@ namespace Architecture.Impl.Repositories
             return account.Balance;
         }
 
-        public int Credit(int amount, Account account)
+        public virtual int Credit(int amount, Account account)
         {
             account.Balance += amount;
             return account.Balance;
