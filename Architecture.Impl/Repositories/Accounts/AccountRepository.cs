@@ -103,5 +103,9 @@ namespace Architecture.Impl.Repositories
             return account.Balance;
         }
 
+        public async Task<List<Account>> getAccountsByCustomer(Customer customer)
+        {
+            return await _context.Accounts.Where(a => a.CustomerId == customer.Id).ToListAsync();
+        }
     }
 }

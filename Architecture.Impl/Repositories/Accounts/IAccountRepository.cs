@@ -9,7 +9,7 @@ namespace Architecture.Impl.Repositories
         Task<List<Account>> getAllAccounts();
         Task<List<Account>> getAccountsByCustomer(Customer customer);
         Task<Account> createAccount(Customer customer, bool isOverdraftAllowed);
-        Task<Account> updateAccount(Guid accountId, Account account);
+        Task<Account> updateAccount(Account account);
         Task<string> deleteAccount(Guid accountId);
         Task<int> Debit(int amount, Account account);
         Task<int> Credit(int amount, Account account);
