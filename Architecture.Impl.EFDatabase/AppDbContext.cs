@@ -12,7 +12,7 @@ namespace Architecture.Impl.EFDatabase
         public DbSet<NoOverdraftAccount> NoOverdraftAccounts { get; set; }
         public DbSet<Customer> Customers { get; set; }
 
-        public AppDbContext() 
+        public AppDbContext()
         {
             Banks = Set<Bank>();
             Accounts = Set<Account>();

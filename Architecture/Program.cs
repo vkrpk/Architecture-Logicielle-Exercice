@@ -1,6 +1,7 @@
 using Architecture.Impl.EFDatabase;
 using Architecture.Impl.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 
 internal class Program
 {
@@ -11,9 +12,6 @@ internal class Program
         // Add services to the container.
         builder.Services.AddRazorPages();
 
-        builder.Services.AddDbContext<AppDbContext>(options => 
-            options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
-
         #region Ajout DI Repositories
         builder.Services.AddScoped<IAccountRepository, AccountRepository>();
         builder.Services.AddScoped<INoOverdraftAccountRepository, NoOverdraftAccountRepository>();
@@ -21,12 +19,26 @@ internal class Program
         builder.Services.AddScoped<ICustomerRepository,CustomerRepository>();
         #endregion
 
+        builder.Services.AddControllers();
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "Bank API",
+                Version = "v1",
+            });
+        });
+
         var app = builder.Build();
 
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
+        app.UseSwagger();
+        app.UseSwaggerUI();
+
         app.UseRouting();
+
 
         app.UseAuthorization();
 

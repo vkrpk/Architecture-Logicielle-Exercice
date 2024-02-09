@@ -7,6 +7,7 @@ namespace Architecture.Impl.Repositories
         Account getAccountById(Guid accountId);
         Account getAccountByNumber(Guid accountNumber);
         List<Account> getAllAccounts();
+        List<Account> getAccountsByCustomer(Customer customer);
         Account createAccount(Customer customer, bool isOverdraftAllowed);
         Account updateAccount(Guid accountId, Account account);
         string deleteAccount(Guid accountId);
