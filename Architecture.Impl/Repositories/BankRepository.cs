@@ -19,7 +19,7 @@ namespace Architecture.Impl.Repositories
 
             if (account.Customer.Name == clientName)
             {
-                _accountRepository.Debit(amount, account);
+               await _accountRepository.Debit(amount, account);
             }
         }
 
@@ -29,7 +29,7 @@ namespace Architecture.Impl.Repositories
 
             if (account.Customer.Name == clientName)
             {
-                _accountRepository.Credit(amount, account);
+                await _accountRepository.Credit(amount, account);
             }
         }
 
@@ -38,7 +38,7 @@ namespace Architecture.Impl.Repositories
             Customer customer = await _customerRepository.getCustomerByClientName(clientName);
             if (customer != null) 
             {
-                _accountRepository.createAccount(customer, isOverdraftAllowed);
+                await _accountRepository.createAccount(customer, isOverdraftAllowed);
             }
         }
 
