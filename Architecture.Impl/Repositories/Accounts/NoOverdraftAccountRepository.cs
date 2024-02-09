@@ -11,7 +11,7 @@ namespace Architecture.Impl.Repositories
             if (amount <= account.Balance)
             {
                 account.Balance -= amount;
-                updateAccount( account);
+                updateAccount(account);
                 return account.Balance;
             }
             else

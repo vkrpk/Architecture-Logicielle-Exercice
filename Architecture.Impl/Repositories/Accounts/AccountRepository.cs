@@ -43,7 +43,15 @@ namespace Architecture.Impl.Repositories
 
         public List<Account> getAllAccounts()
         {
-            return _context.Accounts.ToList();
+            try
+            {
+                var accounts = _context.Accounts?.ToList();
+                return accounts;
+            } catch
+            {
+                throw;
+            }
+
         }
         public List<Account> getAccountsByCustomer(Customer customer)
         {
@@ -54,9 +62,9 @@ namespace Architecture.Impl.Repositories
         {
             Account newAccount;
             if(isOverdraftAllowed)
-                newAccount = new OverdraftAccount();
+                newAccount = new OverdraftAccount { Customer = customer};
             else 
-                newAccount = new NoOverdraftAccount();
+                newAccount = new NoOverdraftAccount{ Customer = customer };
 
             EntityEntry<Account> createdAccount = _context.Accounts.Add(newAccount);
             _context.SaveChanges();
