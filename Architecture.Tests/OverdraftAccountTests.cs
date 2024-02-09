@@ -1,4 +1,5 @@
 using Architecture.Domain.Models;
+using Architecture.Impl.EFDatabase;
 using Architecture.Impl.Repositories;
 using Moq;
 
@@ -9,38 +10,38 @@ namespace Architecture.Tests
     {
         private OverdraftAccount _overdraftAccount;
         private Customer _customer;
-        private Mock<AccountRepository> _mockAccountRepository;
+        private OverdraftAccountRepository _mockOverdraftAccountRepository;
+        private Mock<AppDbContext> _mockContext;
 
         [TestInitialize]
         public void Init()
         {
+            _mockContext = new Mock<AppDbContext>();
+            _mockOverdraftAccountRepository = new OverdraftAccountRepository(_mockContext.Object);
             _customer = new Customer();
             _overdraftAccount = new OverdraftAccount(_customer);
-            _mockAccountRepository = new Mock<AccountRepository>();
-            // _accountRepository = accountRepository;
         }
 
         [TestMethod]
         public void CreditOverdraftAccountNominalTest()
         {
-            // var balance = _mockAccountRepository.Setup(x => x.Credit(100, _overdraftAccount)).Returns(100);
-            Assert.AreEqual(100, 100);
-            // var balance = _accountRepository.Credit(100, _overdraftAccount);
-            // Assert.AreEqual(90, _accountRepository.Credit(100, _overdraftAccount));
+            var result = _mockOverdraftAccountRepository.Credit(100, _overdraftAccount);
+            Assert.AreEqual(100, result);
         }
 
         [TestMethod]
         public void DebitOverdraftAccountNominalTest()
         {
-            _mockAccountRepository.Setup(x => x.Credit(100, _overdraftAccount));
-
-            _mockAccountRepository.Setup(x => x.Debit(100, _overdraftAccount)).Returns(0);
+            var result = _mockOverdraftAccountRepository.Debit(100, _overdraftAccount);
+            Assert.AreEqual(-100, result);
         }
 
         [TestMethod]
         public void DebitOverdraftAccountNegativeBalanceTest()
         {
-            _mockAccountRepository.Setup(x => x.Debit(100, _overdraftAccount)).Returns(-100);
+            _mockOverdraftAccountRepository.Credit(100, _overdraftAccount);
+            var result = _mockOverdraftAccountRepository.Debit(100, _overdraftAccount);
+            Assert.AreEqual(0, result);
         }
     }
 }
