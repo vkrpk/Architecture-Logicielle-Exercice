@@ -2,8 +2,8 @@
 {
     public abstract class Account : BaseModel
     {
-        public int Balance;
-        public Guid AccountNumber;
+        public int Balance { get; set; }
+        public Guid AccountNumber { get; set; }
         public bool IsOverdraftAllowed { get; set; }
         public Guid CustomerId { get; set; }
         public Customer Customer { get; set; }

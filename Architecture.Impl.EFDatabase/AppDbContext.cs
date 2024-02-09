@@ -22,8 +22,8 @@ namespace Architecture.Impl.EFDatabase
 
         }
 
-        //protected override void OnConfiguring(DbContextOptionsBuilder options)
-        //    => options.UseSqlServer("Server=localhost;Database=ArchitectureDB;Trusted_Connection=True;");
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+            => options.UseSqlServer("Server=localhost;Database=ArchitectureDB;Trusted_Connection=True;");
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

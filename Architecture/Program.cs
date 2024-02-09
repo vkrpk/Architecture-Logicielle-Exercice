@@ -12,9 +12,6 @@ internal class Program
         // Add services to the container.
         builder.Services.AddRazorPages();
 
-        builder.Services.AddDbContext<AppDbContext>(options => 
-            options.UseSqlServer(builder.Configuration.GetConnectionString("ConnectionString")));
-
         #region Ajout DI Repositories
         builder.Services.AddScoped<IAccountRepository, AccountRepository>();
         builder.Services.AddScoped<INoOverdraftAccountRepository, NoOverdraftAccountRepository>();
