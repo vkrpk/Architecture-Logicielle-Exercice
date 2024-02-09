@@ -14,12 +14,12 @@ namespace Architecture.Impl.Repositories
             _context = context;
         }
 
-        public Account getAccountById(Guid accountId)
+        public async Task<Account> getAccountById(Guid accountId)
         {
             try
             {
-                return _context.Accounts.Include(a => a.Customer)
-                    .First(a => a.Id == accountId);
+                return await _context.Accounts.Include(a => a.Customer)
+                    .FirstAsync(a => a.Id == accountId);
             }
             catch (Exception ex)
             {
@@ -27,12 +27,12 @@ namespace Architecture.Impl.Repositories
             }
         }
 
-        public Account getAccountByNumber(Guid accountNumber) 
+        public async Task<Account> getAccountByNumber(Guid accountNumber) 
         {
             try
             {
-                return _context.Accounts.Include(a => a.Customer)
-                    .First(a => a.AccountNumber == accountNumber);
+                return await _context.Accounts.Include(a => a.Customer)
+                    .FirstAsync(a => a.AccountNumber == accountNumber);
             }
             catch (Exception ex)
             {
@@ -40,16 +40,16 @@ namespace Architecture.Impl.Repositories
             }
         }
 
-        public List<Account> getAllAccounts()
+        public async Task<List<Account>> getAllAccounts()
         {
-            return _context.Accounts.ToList();
+            return await _context.Accounts.ToListAsync();
         }
         public List<Account> getAccountsByCustomer(Customer customer)
         {
             return _context.Accounts.Where(a => a.CustomerId == customer.Id).ToList();
         }
 
-        public Account createAccount(Customer customer, bool isOverdraftAllowed)
+        public async Task<Account> createAccount(Customer customer, bool isOverdraftAllowed)
         {
             Account newAccount;
             if(isOverdraftAllowed)
@@ -58,38 +58,51 @@ namespace Architecture.Impl.Repositories
                 newAccount = new NoOverdraftAccount();
 
             EntityEntry<Account> createdAccount = _context.Accounts.Add(newAccount);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return createdAccount.Entity;
         }
 
-        public Account updateAccount(Guid accountId, Account account)
+        public async Task<Account> updateAccount(Guid accountId, Account account)
         {
             EntityEntry<Account> updatedAccount = _context.Accounts.Update(account);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return updatedAccount.Entity;
         }
 
-        public string deleteAccount(Guid accountId)
+        public async Task<string> deleteAccount(Guid accountId)
         {
-            Account account = getAccountById(accountId);
+            Account account = await getAccountById(accountId);
             _context.Accounts.Remove(account);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return "Account " + accountId + " supprimé avec succès";
         }
 
-        public virtual int Debit(int amount, Account account)
+        public async virtual Task<int> Debit(int amount, Account account)
         {
             account.Balance -= amount;
+            _context.Accounts.Update(account);
+
+            await _context.SaveChangesAsync();
+
             return account.Balance;
         }
 
-        public int Credit(int amount, Account account)
+        public async Task<int> Credit(int amount, Account account)
         {
             account.Balance += amount;
+
+            _context.Accounts.Update(account);
+            await _context.SaveChangesAsync();
+
             return account.Balance;
+        }
+
+        public List<Account> getAccountsByCustomer(Customer customer)
+        {
+            return _context.Accounts.Where(a => a.CustomerId == customer.Id).ToList();
         }
 
     }

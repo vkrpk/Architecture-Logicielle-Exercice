@@ -22,9 +22,9 @@ namespace DefaultNamespace
         }
 
         [HttpGet]
-        public IActionResult GetAccounts()
+        public async Task<IActionResult> GetAccounts()
         {
-            List<Account> accounts = _accountRepo.getAllAccounts();
+            List<Account> accounts = await _accountRepo.getAllAccounts();
 
             if (accounts == null)
                 return NotFound();
@@ -33,9 +33,9 @@ namespace DefaultNamespace
         }
 
         [HttpGet("byId/{accountId}")]
-        public IActionResult GetAccountById(Guid accountId)
+        public async Task<IActionResult> GetAccountById(Guid accountId)
         {
-            Account account = _accountRepo.getAccountById(accountId);
+            Account account = await _accountRepo.getAccountById(accountId);
 
             if (account == null)
                 return NotFound();
@@ -51,15 +51,15 @@ namespace DefaultNamespace
                 return NotFound();
             else
             {
-                List<Account> accounts = _accountRepo.getAccountsByCustomer(customer);
+                List<Account> accounts = await _accountRepo.getAccountsByCustomer(customer);
                 return Ok(accounts);
             }
         }
 
         [HttpPost("{amount}")]
-        public IActionResult DebitAccount(int amount, [FromBody] Guid accountId)
+        public async Task<IActionResult> DebitAccount(int amount, [FromBody] Guid accountId)
         {
-            Account account = _accountRepo.getAccountById(accountId);
+            Account account = await _accountRepo.getAccountById(accountId);
             if (account.IsOverdraftAllowed)
                 DebitAccount<OverdraftAccount>(amount, account);
             else
