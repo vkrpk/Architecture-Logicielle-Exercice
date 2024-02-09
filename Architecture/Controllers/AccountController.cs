@@ -11,14 +11,28 @@ namespace DefaultNamespace
     {
         private readonly IAccountRepository _accountRepo;
         private readonly INoOverdraftAccountRepository _noOverdraftAccountRepo;
+        private readonly ICustomerRepository _customerRepo;
 
-        public AccountController(IAccountRepository accountRepo, INoOverdraftAccountRepository noOverdraftAccountRepo)
+
+        public AccountController(IAccountRepository accountRepo, INoOverdraftAccountRepository noOverdraftAccountRepo, ICustomerRepository customerRepo)
         {
             _accountRepo = accountRepo;
             _noOverdraftAccountRepo = noOverdraftAccountRepo;
+            _customerRepo = customerRepo;
         }
 
-        [HttpGet("{accountId}")]
+        [HttpGet]
+        public IActionResult GetAccounts()
+        {
+            List<Account> accounts = _accountRepo.getAllAccounts();
+
+            if (accounts == null)
+                return NotFound();
+
+            return Ok(accounts);
+        }
+
+        [HttpGet("byId/{accountId}")]
         public IActionResult GetAccountById(Guid accountId)
         {
             Account account = _accountRepo.getAccountById(accountId);
@@ -28,7 +42,22 @@ namespace DefaultNamespace
 
             return Ok(account);
         }
-        public IActionResult DebitAccount(int amount, Guid accountId)
+
+        [HttpGet("byCustomer/{customerName}")]
+        public IActionResult GetAccountsByCustomer(string customerName)
+        {
+            Customer customer = _customerRepo.getCustomerByName(customerName);
+            if (customer == null)
+                return NotFound();
+            else
+            {
+                List<Account> accounts = _accountRepo.getAccountsByCustomer(customer);
+                return Ok(accounts);
+            }
+        }
+
+        [HttpPost("{amount}")]
+        public IActionResult DebitAccount(int amount, [FromBody] Guid accountId)
         {
             Account account = _accountRepo.getAccountById(accountId);
             if (account.IsOverdraftAllowed)

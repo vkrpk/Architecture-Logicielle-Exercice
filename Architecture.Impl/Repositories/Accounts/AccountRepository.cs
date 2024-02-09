@@ -44,6 +44,10 @@ namespace Architecture.Impl.Repositories
         {
             return _context.Accounts.ToList();
         }
+        public List<Account> getAccountsByCustomer(Customer customer)
+        {
+            return _context.Accounts.Where(a => a.CustomerId == customer.Id).ToList();
+        }
 
         public Account createAccount(Customer customer, bool isOverdraftAllowed)
         {
