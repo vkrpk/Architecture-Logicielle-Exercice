@@ -33,9 +33,9 @@ namespace Architecture.Impl.Repositories
             }
         }
 
-        public void AccountOpening(string clientName, bool isOverdraftAllowed)
+        public async void AccountOpening(string clientName, bool isOverdraftAllowed)
         {
-            Customer customer = _customerRepository.getCustomerByClientName(clientName);
+            Customer customer = await _customerRepository.getCustomerByClientName(clientName);
             if (customer != null) 
             {
                 _accountRepository.createAccount(customer, isOverdraftAllowed);
@@ -49,12 +49,12 @@ namespace Architecture.Impl.Repositories
         }
 
         //TODO
-        //public float ConversionFromEuro(int euroAmount)
+        //public int ConversionFromEuro(int euroAmount)
         //{
         //    // Quelle monnaie ? 
         //}
 
-        //public float ConversionToEuro(int amount)
+        //public int ConversionToEuro(int amount)
         //{
 
         //}

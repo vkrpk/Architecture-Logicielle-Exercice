@@ -1,6 +1,7 @@
 using Architecture.Impl.EFDatabase;
 using Architecture.Impl.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
 
 internal class Program
@@ -8,7 +9,7 @@ internal class Program
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        
+
         // Add services to the container.
         builder.Services.AddRazorPages();
 
@@ -16,8 +17,10 @@ internal class Program
         builder.Services.AddScoped<IAccountRepository, AccountRepository>();
         builder.Services.AddScoped<INoOverdraftAccountRepository, NoOverdraftAccountRepository>();
         builder.Services.AddScoped<IBankRepository, BankRepository>();
-        builder.Services.AddScoped<ICustomerRepository,CustomerRepository>();
+        builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         #endregion
+
+        builder.Services.AddDbContext<AppDbContext>();
 
         builder.Services.AddControllers();
         builder.Services.AddSwaggerGen(c =>

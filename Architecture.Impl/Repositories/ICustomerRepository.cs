@@ -4,12 +4,11 @@ namespace Architecture.Impl.Repositories
 {
     public interface ICustomerRepository
     {
-        Customer getCustomerById(Guid customerId);
-        Customer getCustomerByName(string customerName);
-        Customer getCustomerByClientName(string clientName);
-        List<Customer> getAllCustomer();
-        Customer createCustomer(Customer customer);
-        Customer updateCustomer(Guid customerId, Customer customer);
-        string deleteCustomer(Guid customerId);
+        Task<Customer> getCustomerById(Guid customerId);
+        Task<Customer> getCustomerByClientName(string clientName);
+        Task<List<Customer>> getAllCustomer();
+        Task<Customer> createCustomer(Customer customer);
+        Task<Customer> updateCustomer(Customer customer);
+        Task<string> deleteCustomer(Guid customerId);
     }
 }

@@ -1,10 +1,5 @@
 ﻿using Architecture.Domain.Models;
 using Architecture.Impl.EFDatabase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Architecture.Impl.Repositories
 {
@@ -19,10 +14,10 @@ namespace Architecture.Impl.Repositories
 
             }
             else
-                throw new OverdraftException("You don't have enough money");
+                throw new NoOverdraftException("You don't have enough money");
         }
     }
 
-    public class OverdraftException(string message) : Exception(message) { }
+    public class NoOverdraftException(string message) : Exception(message) { }
 }
 
