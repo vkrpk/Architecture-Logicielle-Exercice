@@ -44,9 +44,9 @@ namespace DefaultNamespace
         }
 
         [HttpGet("byCustomer/{customerName}")]
-        public IActionResult GetAccountsByCustomer(string customerName)
+        public async Task<IActionResult> GetAccountsByCustomer(string customerName)
         {
-            Customer customer = _customerRepo.getCustomerByName(customerName);
+            Customer customer = await _customerRepo.getCustomerByClientName(customerName);
             if (customer == null)
                 return NotFound();
             else
