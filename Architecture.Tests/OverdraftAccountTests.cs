@@ -19,7 +19,7 @@ namespace Architecture.Tests
             _mockContext = new Mock<AppDbContext>();
             _mockOverdraftAccountRepository = new OverdraftAccountRepository(_mockContext.Object);
             _customer = new Customer();
-            _overdraftAccount = new OverdraftAccount(_customer);
+            _overdraftAccount = new OverdraftAccount();
         }
 
         [TestMethod]
