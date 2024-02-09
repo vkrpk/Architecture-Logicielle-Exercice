@@ -9,7 +9,7 @@ namespace Architecture.Impl.Repositories
         List<Account> getAllAccounts();
         List<Account> getAccountsByCustomer(Customer customer);
         Account createAccount(Customer customer, bool isOverdraftAllowed);
-        Account updateAccount(Guid accountId, Account account);
+        Account updateAccount(Account account);
         string deleteAccount(Guid accountId);
         int Debit(int amount, Account account);
         int Credit(int amount, Account account);
