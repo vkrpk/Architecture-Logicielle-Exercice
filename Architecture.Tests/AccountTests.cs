@@ -44,12 +44,14 @@ namespace Architecture.Tests
         private OverdraftAccount overdraftAccount;
         private NoOverdraftAccount noOverdraftAccount;
         private Mock mockService = new Mock<IAccountRepository>();
+        private IAccountRepository = _accountRepository
 
         [TestInitialize]
         public void Init()
         {
-            overdraftAccount = new OverdraftAccount();
-            noOverdraftAccount = new NoOverdraftAccount();
+            _overdraftAccount = new OverdraftAccount();
+            _noOverdraftAccount = new NoOverdraftAccount();
+            _accountRepository = accountRepository
 
         }
 
