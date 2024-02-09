@@ -10,10 +10,5 @@
         public Guid BankId { get; set; }
         public Bank Bank { get; set; }
 
-        public Account(Customer customer) 
-        {
-            Customer = customer;
-        }
-
     }
 }

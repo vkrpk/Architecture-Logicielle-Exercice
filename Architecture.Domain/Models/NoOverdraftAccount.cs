@@ -1,6 +1,6 @@
 ﻿namespace Architecture.Domain.Models
 {
-    public class NoOverdraftAccount(Customer customer) : Account(customer)
+    public class NoOverdraftAccount : Account
     {
         public new bool IsOverdraftAllowed = false;
     }
