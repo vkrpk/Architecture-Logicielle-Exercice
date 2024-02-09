@@ -2,6 +2,7 @@
 using Architecture.Impl.EFDatabase;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using System;
 
 namespace Architecture.Impl.Repositories
 {
@@ -63,10 +64,12 @@ namespace Architecture.Impl.Repositories
             return createdAccount.Entity;
         }
 
-        public Account updateAccount(Guid accountId, Account account)
+        public async Task<Account> updateAccount(Account account)
         {
+            var entity = await _context.Accounts.FindAsync(account.Id);
+            _context.Entry(entity).CurrentValues.SetValues(account);
             EntityEntry<Account> updatedAccount = _context.Accounts.Update(account);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return updatedAccount.Entity;
         }
@@ -83,10 +86,11 @@ namespace Architecture.Impl.Repositories
         public virtual int Debit(int amount, Account account)
         {
             account.Balance -= amount;
+            updateAccount(account);
             return account.Balance;
         }
 
-        public int Credit(int amount, Account account)
+        public virtual int Credit(int amount, Account account)
         {
             account.Balance += amount;
             return account.Balance;
