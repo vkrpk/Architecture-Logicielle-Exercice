@@ -1,4 +1,4 @@
-Ce fichier README a été généré le [08/02/2024] par [Groupe 1 : Arthur | Hervé | Laurine | Victor].
+Ce fichier README a été généré le 08/02/2024 par le Groupe 1 : Arthur | Hervé | Laurine | Victor.
 
 Dernière mise-à-jour le : [08/02/2024].
 
