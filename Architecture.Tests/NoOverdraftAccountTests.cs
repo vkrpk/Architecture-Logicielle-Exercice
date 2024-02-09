@@ -9,7 +9,6 @@ namespace Architecture.Tests
     public class NoOverdraftAccountTests
     {
         private NoOverdraftAccount _noOverdraftAccount;
-        private Customer _customer;
         private NoOverdraftAccountRepository _mockNoOverdraftAccountRepository;
         private Mock<AppDbContext> _mockContext;
 
@@ -18,7 +17,6 @@ namespace Architecture.Tests
         {
             _mockContext = new Mock<AppDbContext>();
             _mockNoOverdraftAccountRepository = new NoOverdraftAccountRepository(_mockContext.Object);
-            _customer = new Customer();
             _noOverdraftAccount = new NoOverdraftAccount();
         }
 
