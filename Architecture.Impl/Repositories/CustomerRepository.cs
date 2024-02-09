@@ -61,6 +61,18 @@ namespace Architecture.Impl.Repositories
                 throw new Exception($"Impossible de trouver le compte avec l'ID {customerId}.", ex);
             }
         }
+        public Customer getCustomerByName(string customerName)
+        {
+            try
+            {
+                return _context.Customers.Include(a => a.Accounts)
+                    .First(a => a.Name == customerName);
+            }
+            catch (Exception ex)
+            {
+                throw new Exception($"Impossible de trouver le compte avec l'ID {customerName}.", ex);
+            }
+        }
 
         public Customer updateCustomer(Guid customerId, Customer customer)
         {

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Architecture.Impl.Repositories
 {
-    public abstract class AccountRepository : IAccountRepository
+    public class AccountRepository : IAccountRepository
     {
         private readonly AppDbContext _context;
 
@@ -43,6 +43,10 @@ namespace Architecture.Impl.Repositories
         public List<Account> getAllAccounts()
         {
             return _context.Accounts.ToList();
+        }
+        public List<Account> getAccountsByCustomer(Customer customer)
+        {
+            return _context.Accounts.Where(a => a.CustomerId == customer.Id).ToList();
         }
 
         public Account createAccount(Customer customer, bool isOverdraftAllowed)
