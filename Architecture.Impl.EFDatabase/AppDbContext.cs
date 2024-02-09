@@ -7,7 +7,7 @@ namespace Architecture.Impl.EFDatabase
     public class AppDbContext : DbContext
     {
         public DbSet<Bank> Banks { get; set; }
-        public DbSet<Account> Accounts { get; set; }
+        public virtual DbSet<Account> Accounts { get; set; }
         public DbSet<OverdraftAccount> OverdraftAccounts { get; set; }
         public DbSet<NoOverdraftAccount> NoOverdraftAccounts { get; set; }
         public DbSet<Customer> Customers { get; set; }
@@ -23,7 +23,7 @@ namespace Architecture.Impl.EFDatabase
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer("Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=ArchitectureDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False");
+            => options.UseSqlServer("Votre chaîne de connexion ici");
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
