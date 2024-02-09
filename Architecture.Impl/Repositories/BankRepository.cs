@@ -13,9 +13,9 @@ namespace Architecture.Impl.Repositories
             _customerRepository = customerRepository;
         }
 
-        public void Withdrawal(Guid accountNumber, string clientName, int amount)
+        public async Task Withdrawal(Guid accountNumber, string clientName, int amount)
         {
-            Account account = _accountRepository.getAccountByNumber(accountNumber);
+            Account account = await _accountRepository.getAccountByNumber(accountNumber);
 
             if (account.Customer.Name == clientName)
             {
@@ -23,9 +23,9 @@ namespace Architecture.Impl.Repositories
             }
         }
 
-        public void Deposit(Guid accountNumber, string clientName, int amount)
+        public async Task Deposit(Guid accountNumber, string clientName, int amount)
         {
-            Account account = _accountRepository.getAccountByNumber(accountNumber);
+            Account account = await _accountRepository.getAccountByNumber(accountNumber);
 
             if (account.Customer.Name == clientName)
             {
@@ -33,7 +33,7 @@ namespace Architecture.Impl.Repositories
             }
         }
 
-        public async void AccountOpening(string clientName, bool isOverdraftAllowed)
+        public async Task AccountOpening(string clientName, bool isOverdraftAllowed)
         {
             Customer customer = await _customerRepository.getCustomerByClientName(clientName);
             if (customer != null) 
@@ -42,9 +42,9 @@ namespace Architecture.Impl.Repositories
             }
         }
 
-        public int Consultation(Guid accountNumber)
+        public async Task<int> Consultation(Guid accountNumber)
         {
-            Account account = _accountRepository.getAccountByNumber(accountNumber);
+            Account account = await _accountRepository.getAccountByNumber(accountNumber);
             return account.Balance;
         }
 

@@ -2,10 +2,10 @@
 {
     public interface IBankRepository
     {
-        public void Withdrawal(Guid accountNumber, string clientName, int amount);
-        public void Deposit(Guid accountNumber, string clientName, int amount);
-        public void AccountOpening(string clientName, bool isOverdraftAllowed);
-        public int Consultation(Guid accountNumber);
+        public Task Withdrawal(Guid accountNumber, string clientName, int amount);
+        public Task Deposit(Guid accountNumber, string clientName, int amount);
+        public Task AccountOpening(string clientName, bool isOverdraftAllowed);
+        public Task<int> Consultation(Guid accountNumber);
 
         //TODO
         //public float ConversionFromEuro(int euroAmount);
