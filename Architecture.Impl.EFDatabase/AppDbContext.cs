@@ -7,7 +7,7 @@ namespace Architecture.Impl.EFDatabase
     public class AppDbContext : DbContext
     {
         public DbSet<Bank> Banks { get; set; }
-        public virtual DbSet<Account> Accounts { get; set; }
+        public DbSet<Account> Accounts { get; set; }
         public DbSet<OverdraftAccount> OverdraftAccounts { get; set; }
         public DbSet<NoOverdraftAccount> NoOverdraftAccounts { get; set; }
         public DbSet<Customer> Customers { get; set; }
