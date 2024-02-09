@@ -1,14 +1,8 @@
 ﻿namespace Architecture.Domain.Models
 {
-    public class NoOverdraftAccount : Account
+    public class NoOverdraftAccount(Customer customer) : Account(customer)
     {
-        public override int Debit(int amount)
-        {
-            if (amount <= base.Balance)
-                return base.Balance - amount;
-            else
-                throw new OverdraftException("You don't have enough money");
-        }
+        public new bool IsOverdraftAllowed = false;
     }
 
     public class OverdraftException (string message) : Exception(message) { } 

@@ -8,8 +8,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Architecture.Domain\Architecture.Domain.csproj" />
-    <ProjectReference Include="..\Architecture\Architecture.csproj" />
+    <ProjectReference Include="..\Architecture.Impl.EFDatabase\Architecture.Impl.EFDatabase.csproj" />
   </ItemGroup>
 
 </Project>

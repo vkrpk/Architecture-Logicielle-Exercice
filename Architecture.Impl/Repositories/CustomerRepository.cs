@@ -1,17 +1,11 @@
 ﻿using Architecture.Domain.Models;
 using Architecture.Impl.EFDatabase;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Identity.Client;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
-using System.Text;
-using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Architecture.Impl.Repositories
 {
-    internal class CustomerRepository : ICustomerRepository
+    public class CustomerRepository : ICustomerRepository
     {
         private readonly AppDbContext _context;
 
@@ -47,7 +41,7 @@ namespace Architecture.Impl.Repositories
             try
             {
                 return _context.Customers.Include(a => a.Accounts)
-                    .FirstOrDefault(a => a.Name == clientName);
+                    .First(a => a.Name == clientName);
             }
             catch (Exception ex)
             {
@@ -60,7 +54,7 @@ namespace Architecture.Impl.Repositories
             try
             {
                 return _context.Customers.Include(a => a.Accounts)
-                    .FirstOrDefault(a => a.Id == customerId);
+                    .First(a => a.Id == customerId);
             }
             catch (Exception ex)
             {

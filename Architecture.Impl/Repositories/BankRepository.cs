@@ -1,14 +1,8 @@
 ﻿using Architecture.Domain.Models;
-using System;
-using System.Collections.Generic;
-using System.Dynamic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Architecture.Impl.Repositories
 {
-    internal class BankRepository: IBankRepository
+    public class BankRepository : IBankRepository
     {
         public readonly IAccountRepository _accountRepository;
         public readonly ICustomerRepository _customerRepository;
@@ -39,15 +33,13 @@ namespace Architecture.Impl.Repositories
             }
         }
 
-        public void AccountOpening(string clientName)
+        public void AccountOpening(string clientName, bool isOverdraftAllowed)
         {
             Customer customer = _customerRepository.getCustomerByClientName(clientName);
             if (customer != null) 
             {
-                
+                _accountRepository.createAccount(customer, isOverdraftAllowed);
             }
-            // get client by clientName
-            // créer un nouveau compte avec le client
         }
 
         public int Consultation(Guid accountNumber)
@@ -56,14 +48,15 @@ namespace Architecture.Impl.Repositories
             return account.Balance;
         }
 
-        public float ConversionFromEuro(int euroAmount)
-        {
-            // Quelle monnaie ? 
-        }
+        //TODO
+        //public float ConversionFromEuro(int euroAmount)
+        //{
+        //    // Quelle monnaie ? 
+        //}
 
-        public float ConversionToEuro(int amount)
-        {
+        //public float ConversionToEuro(int amount)
+        //{
 
-        }
+        //}
     }
 }

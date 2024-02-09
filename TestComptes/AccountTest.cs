@@ -1,4 +1,6 @@
 using Architecture.Domain.Models;
+using Architecture.Impl.Repositories;
+using Moq;
 using System.Diagnostics;
 
 namespace ArchitectureTests
@@ -8,6 +10,7 @@ namespace ArchitectureTests
     {
         private OverdraftAccount overdraftAccount;
         private NoOverdraftAccount noOverdraftAccount;
+        private Mock mockService = new Mock<IAccountRepository>();
 
         [TestInitialize]
         public void Init()
