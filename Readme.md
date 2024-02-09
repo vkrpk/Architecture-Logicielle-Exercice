@@ -47,25 +47,3 @@ Voici la procédure en ouvrant la solution avec Visual Studio :
 
 Au lancement de l'application (veilez à bien avoir comme projet de démarrage Architecture), une fenêtre de navigateur d'ouvre, montrant une erreur 404. 
 Afin d'accéder à l'interface de swagger pour tester les méthodes des contrôleurs, il suffit de rajouter "/swagger" dans l'URL. 
-
-
-## Procédures d’assurance-qualité appliquées sur les données :
-
-## Autres informations contextuelles :
-<Toute information que vous considérez importante pour évaluer la qualité du jeu de données ou pour sa réutilisation : par exemple, des informations concernant les logiciels nécessaires pour interpréter les données.
-Si applicable et non-inclus préalablement, ajouter les noms complets et les versions de tous les logiciels, de tous les paquets et de toutes les librairies nécessaires pour lire et interpréter les données *e.g.* pour compiler les scripts.>
-
-
-
-
-# INFORMATIONS SPECIFIQUES AUX DONNEES POUR : [NOM DU FICHIER]
-
-<Le cas échéant, reproduire cette section pour chaque dossier ou fichier.
-Les éléments se répétant peuvent être expliqués dans une section initiale commune.>
-
-<Pour les données tabulaires, fournir un dictionnaire des données/manuel de codage contenant les informations suivantes :>
-## Liste des variables/entêtes de colonne :
-
-Pour chaque nom de variable ou entête de colonne, indiquer :
- 
-    -- le nom complet de la variable sous forme “lisible par les humains” ; 
