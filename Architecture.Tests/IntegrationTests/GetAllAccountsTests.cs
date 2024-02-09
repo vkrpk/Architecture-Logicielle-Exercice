@@ -23,10 +23,6 @@ namespace Architecture.Tests
             private NoOverdraftAccountRepository _noOverdraftAccountRepository;
             private AccountController _overdraftAccountController;
 
-            private OverdraftAccount _overdraftAccount1;
-            private OverdraftAccount _overdraftAccount2;
-            private OverdraftAccount _overdraftAccount;
-
 
             [TestInitialize]
             public void Init()
