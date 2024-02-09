@@ -8,9 +8,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
       <Content Remove="ArchitectureDomainTests\**" />
     </ItemGroup>
 
@@ -42,6 +39,7 @@
 
     <ItemGroup>
       <None Remove="ArchitectureDomainTests\**" />
+      <None Remove="Dockerfile" />
     </ItemGroup>
 
     <ItemGroup>
