@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Architecture.Domain.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Architecture.Domain.Models;
 using Architecture.Impl.EFDatabase;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 
 namespace Architecture.Impl.Repositories
 {
-    public class AccountRepository: IAccountRepository
+    public abstract class AccountRepository : IAccountRepository
     {
         private readonly AppDbContext _context;
 
@@ -24,7 +19,7 @@ namespace Architecture.Impl.Repositories
             try
             {
                 return _context.Accounts.Include(a => a.Customer)
-                    .FirstOrDefault(a => a.Id == accountId);
+                    .First(a => a.Id == accountId);
             }
             catch (Exception ex)
             {
@@ -37,7 +32,7 @@ namespace Architecture.Impl.Repositories
             try
             {
                 return _context.Accounts.Include(a => a.Customer)
-                    .FirstOrDefault(a => a.AccountNumber == accountNumber);
+                    .First(a => a.AccountNumber == accountNumber);
             }
             catch (Exception ex)
             {
@@ -48,12 +43,17 @@ namespace Architecture.Impl.Repositories
         public List<Account> getAllAccounts()
         {
             return _context.Accounts.ToList();
-
         }
 
-        public Account createAccount(Account account)
+        public Account createAccount(Customer customer, bool isOverdraftAllowed)
         {
-            EntityEntry<Account> createdAccount = _context.Accounts.Add(account);
+            Account newAccount;
+            if(isOverdraftAllowed)
+                newAccount = new OverdraftAccount(customer);
+            else 
+                newAccount = new NoOverdraftAccount(customer);
+
+            EntityEntry<Account> createdAccount = _context.Accounts.Add(newAccount);
             _context.SaveChanges();
 
             return createdAccount.Entity;
@@ -76,7 +76,7 @@ namespace Architecture.Impl.Repositories
             return "Account " + accountId + " supprimé avec succès";
         }
 
-        public int Debit(int amount, Account account)
+        public virtual int Debit(int amount, Account account)
         {
             account.Balance -= amount;
             return account.Balance;

@@ -1,59 +1,49 @@
 ﻿using System;
 using Microsoft.AspNetCore.Mvc;
 using Architecture.Domain.Models;
+using Architecture.Impl.Repositories;
 
 namespace DefaultNamespace
 {
     [ApiController]
     [Route("/api/[controller]")]
-    public class AccountController : ControllerBase
+    public class AccountController : Controller
     {
-        private readonly Account _noOverdraftAccount;
-        private readonly Account _overdraftAccount;
+        private readonly IAccountRepository _accountRepo;
+        private readonly INoOverdraftAccountRepository _noOverdraftAccountRepo;
 
-        public AccountController()
+        public AccountController(IAccountRepository accountRepo, INoOverdraftAccountRepository noOverdraftAccountRepo)
         {
-            _noOverdraftAccount = new NoOverdraftAccount();
-            _overdraftAccount = new OverdraftAccount();
+            _accountRepo = accountRepo;
+            _noOverdraftAccountRepo = noOverdraftAccountRepo;
         }
 
         [HttpGet("{accountId}")]
         public IActionResult GetAccountById(Guid accountId)
         {
-            Account account = GetAccountFromDatabase(accountId);
+            Account account = _accountRepo.getAccountById(accountId);
 
             if (account == null)
-            {
                 return NotFound();
-            }
 
             return Ok(account);
         }
-
-        private Account GetAccountFromDatabase(Guid accountId)
+        public IActionResult DebitAccount(int amount, Guid accountId)
         {
-            Account account = FindAccountInDatabase<NoOverdraftAccount>(accountId);
-            if (account == null)
-            {
-                account = FindAccountInDatabase<OverdraftAccount>(accountId);
-            }
-            return account;
-        }
-
-        public IActionResult DebitAccount(Guid accountId)
-        {
-            Account account = GetAccountById(accountId);
-            if (account == null)
-            {
-                return NotFound();
-            }
-
+            Account account = _accountRepo.getAccountById(accountId);
+            if (account.IsOverdraftAllowed)
+                DebitAccount<OverdraftAccount>(amount, account);
+            else
+                DebitAccount<NoOverdraftAccount>(amount, account);
             return Ok(account);
         }
-
-        private Account FindAccountInDatabase<T>(Guid accountId) where T : Account
+        private void DebitAccount<T>(int amount, Account account) where T : Account
         {
-            return null;
+            var type = typeof(T);
+            if (type == typeof(NoOverdraftAccount))
+                _noOverdraftAccountRepo.Debit(amount, account); 
+            else
+                _accountRepo.Debit(amount, account);
         }
     }
 
