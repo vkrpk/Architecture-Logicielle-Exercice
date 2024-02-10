@@ -1,5 +1,4 @@
 ﻿using Architecture.Domain.Models;
-//using Architecture.Controllers; // Sauf si changement deffaultNamespace
 using Architecture.Impl.EFDatabase;
 using Architecture.Impl.Repositories;
 using Architecturee.Controllers;
