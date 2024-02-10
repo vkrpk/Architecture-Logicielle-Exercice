@@ -49,7 +49,19 @@ Au lancement de l'application (veilez à bien avoir comme projet de démarrage A
 Afin d'accéder à l'interface de swagger pour tester les méthodes des contrôleurs, il suffit de rajouter "/swagger" dans l'URL. 
 
 
-## Procédures d’assurance-qualité appliquées sur les données :
+## Procédures d’assurance-qualité appliquées sur le code :
+Pour assurer une haute qualité du code et une maintenance facile de l'application, nous avons intégré SonarCloud, un service d'analyse continue. SonarCloud analyse automatiquement notre code pour détecter les bugs, les vulnérabilités, et les "code smells", tout en fournissant des feedbacks sur la couverture des tests.
+
+URL du tableau de bord SonarCloud : [sonarcloud](https://sonarcloud.io/summary/overall?id=vkrpk_Architecture-Logicielle-Exercice)
+
+## Démarrage de l'application avec Docker :
+Pour faciliter le déploiement et assurer la cohérence des environnements de développement, nous avons dockerisé l'application.   
+Vous pouvez démarrer l'application en utilisant Docker Compose.  
+Naviguez jusqu'à la racine du projet où se trouve le fichier docker-compose.yml.  
+Exécutez la commande suivante pour démarrer tous les services :  
+```bash
+docker compose up -d
+```
 
 ## Autres informations contextuelles :
 <Toute information que vous considérez importante pour évaluer la qualité du jeu de données ou pour sa réutilisation : par exemple, des informations concernant les logiciels nécessaires pour interpréter les données.
