@@ -1,6 +1,6 @@
 Ce fichier README a été généré le 08/02/2024 par le Groupe 1 : Arthur | Hervé | Laurine | Victor.
 
-Dernière mise-à-jour le : [08/02/2024].
+Dernière mise-à-jour le : [10/02/2024].
 
 # INFORMATIONS GENERALES
 
@@ -47,3 +47,12 @@ Voici la procédure en ouvrant la solution avec Visual Studio :
 
 Au lancement de l'application (veilez à bien avoir comme projet de démarrage Architecture), une fenêtre de navigateur d'ouvre, montrant une erreur 404. 
 Afin d'accéder à l'interface de swagger pour tester les méthodes des contrôleurs, il suffit de rajouter "/swagger" dans l'URL. 
+
+## Démarrage avec Docker
+
+Lancez cette commande pour démarrer le build et l'exécution dans un environnement Docker : 
+
+```cmd
+docker compose up --build -d
+```
+>Sur windows pensez à démarrer l'application Docker Desktop
