@@ -28,7 +28,7 @@ public class CustomerController : Controller
         return Ok(customer);
     }
 
-    [HttpGet("{clientName}")]
+    [HttpGet("byName/{clientName}")]
     public IActionResult getCustomerByName(string clientName)
     {
         Customer customer = _customerRepository.getCustomerByClientName(clientName);

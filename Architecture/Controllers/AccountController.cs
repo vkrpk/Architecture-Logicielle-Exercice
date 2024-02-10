@@ -32,7 +32,7 @@ namespace DefaultNamespace
             return Ok(accounts);
         }
 
-        [HttpGet("byId/{accountId}")]
+        [HttpGet("{accountId}")]
         public IActionResult GetAccountById(Guid accountId)
         {
             Account account = _accountRepo.getAccountById(accountId);
