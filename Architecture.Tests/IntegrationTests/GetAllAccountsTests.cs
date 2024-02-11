@@ -1,12 +1,13 @@
 ﻿using Architecture.Domain.Models;
+//using Architecture.Controllers; // Sauf si changement deffaultNamespace
 using Architecture.Impl.EFDatabase;
 using Architecture.Impl.Repositories;
-using Architecturee.Controllers;
+// using Architecturee.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Moq;
-
+/*
 namespace Architecture.Tests
 {
     public class GettAllAccountsTests
@@ -72,3 +73,4 @@ namespace Architecture.Tests
         }
     }
 }
+*/

@@ -2,6 +2,7 @@
 using Architecture.Impl.EFDatabase;
 using Microsoft.Identity.Client;
 
+
 namespace Architecture.Impl.Repositories
 {
     public class NoOverdraftAccountRepository(AppDbContext context) : AccountRepository(context), INoOverdraftAccountRepository
@@ -11,7 +12,9 @@ namespace Architecture.Impl.Repositories
             if (amount <= account.Balance)
             {
                 account.Balance -= amount;
+
                 updateAccount(account);
+
                 return account.Balance;
             }
             else

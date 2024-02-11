@@ -40,7 +40,6 @@ namespace Architecture.Tests
         [TestMethod]
         public void DebitNoOverdraftAccountNegativeBalanceTest()
         {
-            // var result = _mockNoOverdraftAccountRepository.Credit(100, _noOverdraftAccount);
             Assert.ThrowsException<NoOverdraftException>(() => _mockNoOverdraftAccountRepository.Debit(100, _noOverdraftAccount));
         }
     }

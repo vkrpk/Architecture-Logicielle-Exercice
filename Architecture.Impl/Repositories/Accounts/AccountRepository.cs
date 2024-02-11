@@ -45,10 +45,6 @@ namespace Architecture.Impl.Repositories
         {
             return _context.Accounts?.ToList();
         }
-        public List<Account> getAccountsByCustomer(Customer customer)
-        {
-            return _context.Accounts.Where(a => a.CustomerId == customer.Id).ToList();
-        }
 
         public Account createAccount(Customer customer, bool isOverdraftAllowed)
         {
@@ -90,11 +86,16 @@ namespace Architecture.Impl.Repositories
             return account.Balance;
         }
 
-        public virtual int Credit(int amount, Account account)
+        public int Credit(int amount, Account account)
         {
             account.Balance += amount;
+            updateAccount(account);
             return account.Balance;
         }
 
+        public List<Account> getAccountsByCustomer(Customer customer)
+        {
+            return _context.Accounts.Where(a => a.CustomerId == customer.Id).ToList();
+        }
     }
 }

@@ -32,7 +32,7 @@ namespace Architecturee.Controllers
             return Ok(accounts);
         }
 
-        [HttpGet("byId/{accountId}")]
+        [HttpGet("{accountId}")]
         public IActionResult GetAccountById(Guid accountId)
         {
             Account account = _accountRepo.getAccountById(accountId);
@@ -44,9 +44,9 @@ namespace Architecturee.Controllers
         }
 
         [HttpGet("byCustomer/{customerName}")]
-        public async Task<IActionResult> GetAccountsByCustomer(string customerName)
+        public IActionResult GetAccountsByCustomer(string customerName)
         {
-            Customer customer = await _customerRepo.getCustomerByClientName(customerName);
+            Customer customer = _customerRepo.getCustomerByClientName(customerName);
             if (customer == null)
                 return NotFound();
             else
