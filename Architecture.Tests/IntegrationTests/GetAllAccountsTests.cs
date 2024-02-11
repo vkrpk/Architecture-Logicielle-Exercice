@@ -8,62 +8,65 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 namespace Architecture.Tests
 {
-    [TestClass]
     public class GettAllAccountsTests
     {
-
-        private Mock<AppDbContext> _mockContext;
-
-        private AccountRepository _accountRepository;
-        private CustomerRepository _customerRepository;
-
-        private NoOverdraftAccountRepository _noOverdraftAccountRepository;
-        private AccountController _overdraftAccountController;
-
-
-        [TestInitialize]
-        public void Init()
+        [TestClass]
+        public class OverdraftAccountRepositoryIntegrationTests
         {
-            _mockContext = new Mock<AppDbContext>();
-            _noOverdraftAccountRepository = new NoOverdraftAccountRepository(_mockContext.Object);
-            _accountRepository = new AccountRepository(_mockContext.Object);
-            _customerRepository = new CustomerRepository(_mockContext.Object);
+            private Mock<AppDbContext> _mockContext;
 
-            _overdraftAccountController = new AccountController(_accountRepository, _noOverdraftAccountRepository, _customerRepository);
-        }
+            private AccountRepository _accountRepository;
+            private CustomerRepository _customerRepository;
 
-        [TestMethod]
-        public void GetAccounts_Returns_OverdraftAccounts()
-        {
+            private NoOverdraftAccountRepository _noOverdraftAccountRepository;
+            private AccountController _overdraftAccountController;
 
-            // Créer des données simulées à retourner par la propriété Accounts
-            var accountsData = new List<Account>
+
+            [TestInitialize]
+            public void Init()
             {
-                new OverdraftAccount(),
-                new OverdraftAccount()
-            };
+                _mockContext = new Mock<AppDbContext>();
+                _noOverdraftAccountRepository = new NoOverdraftAccountRepository(_mockContext.Object);
+                _accountRepository = new AccountRepository(_mockContext.Object);
+                _customerRepository = new CustomerRepository(_mockContext.Object);
 
-            // Créer un DbSet simulé à partir des données simulées
-            var mockDbSet = new Mock<DbSet<Account>>();
-            mockDbSet.As<IQueryable<Account>>().Setup(m => m.Provider).Returns(accountsData.AsQueryable().Provider);
-            mockDbSet.As<IQueryable<Account>>().Setup(m => m.Expression).Returns(accountsData.AsQueryable().Expression);
-            mockDbSet.As<IQueryable<Account>>().Setup(m => m.ElementType).Returns(accountsData.AsQueryable().ElementType);
-            mockDbSet.As<IQueryable<Account>>().Setup(m => m.GetEnumerator()).Returns(() => accountsData.AsQueryable().GetEnumerator());
+                _overdraftAccountController = new AccountController(_accountRepository, _noOverdraftAccountRepository, _customerRepository);
+            }
 
-            // Configurer le comportement de la propriété Accounts
-            _mockContext.SetupGet(c => c.Accounts).Returns(mockDbSet.Object);
+            [TestMethod]
+            public void GetAccounts_Returns_OverdraftAccounts()
+            {
 
-            // Act
-            var simulatedAccounts = _mockContext.Object.Accounts.ToList();
+                // Créer des données simulées à retourner par la propriété Accounts
+                var accountsData = new List<Account>
+                {
+                    new OverdraftAccount(),
+                    new OverdraftAccount()
+                };
 
-            var result = _overdraftAccountController.GetAccounts() as OkObjectResult;
-            var returnedAccounts = result?.Value as List<Account>;
+                // Créer un DbSet simulé à partir des données simulées
+                var mockDbSet = new Mock<DbSet<Account>>();
+                mockDbSet.As<IQueryable<Account>>().Setup(m => m.Provider).Returns(accountsData.AsQueryable().Provider);
+                mockDbSet.As<IQueryable<Account>>().Setup(m => m.Expression).Returns(accountsData.AsQueryable().Expression);
+                mockDbSet.As<IQueryable<Account>>().Setup(m => m.ElementType).Returns(accountsData.AsQueryable().ElementType);
+                mockDbSet.As<IQueryable<Account>>().Setup(m => m.GetEnumerator()).Returns(() => accountsData.AsQueryable().GetEnumerator());
 
-            // Assert
-            Assert.IsNotNull(result);
-            Assert.AreEqual(StatusCodes.Status200OK, result.StatusCode);
-            Assert.IsNotNull(returnedAccounts);
-            Assert.AreEqual(simulatedAccounts.Count, returnedAccounts.Count);
+                // Configurer le comportement de la propriété Accounts
+                _mockContext.SetupGet(c => c.Accounts).Returns(mockDbSet.Object);
+
+                // Act
+                var simulatedAccounts = _mockContext.Object.Accounts.ToList();
+
+                var result = _overdraftAccountController.GetAccounts() as OkObjectResult;
+                var returnedAccounts = result?.Value as List<Account>;
+
+                // Assert
+                Assert.IsNotNull(result);
+                Assert.AreEqual(StatusCodes.Status200OK, result.StatusCode);
+                Assert.IsNotNull(returnedAccounts);
+                Assert.AreEqual(simulatedAccounts.Count, returnedAccounts.Count);
+
+            }
 
         }
     }
