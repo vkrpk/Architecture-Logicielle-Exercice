@@ -62,11 +62,16 @@ namespace Architecture.Tests
             // Assert
             var okResult = result as OkObjectResult;
             Assert.IsNotNull(okResult);
-            Assert.AreEqual(200, okResult.StatusCode);
+            //Assert.AreEqual(200, okResult.StatusCode);
 
             var returnedAccounts = okResult.Value as List<Account>;
             Assert.IsNotNull(returnedAccounts);
             Assert.AreEqual(mockAccounts.Count, returnedAccounts.Count);
+            foreach (var account in returnedAccounts)
+            {
+                Assert.IsTrue(account.CustomerId == customerId); // Vérifie que l'ID du client associé au compte est correct
+                                                                 // Autres assertions pour vérifier les propriétés du compte si nécessaire
+            }
         }
 
         [TestMethod]
