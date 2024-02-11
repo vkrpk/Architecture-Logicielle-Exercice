@@ -83,8 +83,8 @@ namespace Architecture.Tests
 
             // Assert
             var notFoundResult = result as NotFoundResult;
-            Assert.ThrowsException<NullReferenceException>(async () => await _accountController.GetAccountsByCustomer(nonExistentCustomerName));
-            //Assert.AreEqual(404, notFoundResult.StatusCode);
+            Assert.IsNotNull(notFoundResult);
+            Assert.AreEqual(404, notFoundResult.StatusCode);
         }
     }
 }
