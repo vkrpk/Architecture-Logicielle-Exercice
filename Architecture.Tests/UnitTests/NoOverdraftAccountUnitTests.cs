@@ -6,7 +6,7 @@ using Moq;
 namespace Architecture.Tests
 {
     [TestClass]
-    public class NoOverdraftAccountTests
+    public class NoOverdraftAccountUnitTests
     {
         private NoOverdraftAccount _noOverdraftAccount;
         private NoOverdraftAccountRepository _mockNoOverdraftAccountRepository;

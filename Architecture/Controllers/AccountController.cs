@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Architecture.Domain.Models;
 using Architecture.Impl.Repositories;
 
-namespace DefaultNamespace
+namespace Architecturee.Controllers
 {
     [ApiController]
     [Route("/api/[controller]")]
