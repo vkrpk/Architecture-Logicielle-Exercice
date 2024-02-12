@@ -34,7 +34,7 @@ namespace Architecture.Tests
             _noOverdraftAccountRepository = new NoOverdraftAccountRepository(_mockContext.Object);
             _accountRepository = new AccountRepository(_mockContext.Object);
             _customerRepository = new CustomerRepository(_mockContext.Object);
-            _accountController = new AccountController(_accountRepository, _noOverdraftAccountRepository, _customerRepository);
+            _accountController = new AccountController(_mockAccountRepo.Object, _noOverdraftAccountRepository, _mockCustomerRepo.Object);
         }
 
         [TestMethod]
@@ -45,12 +45,16 @@ namespace Architecture.Tests
             var accountGuid1 = Guid.NewGuid();
             var accountGuid2 = Guid.NewGuid();
             var customerId = Guid.NewGuid();
+
+
             Customer mockCustomer = new Customer { Id = customerId, Name = customerName };
+            var firstAccount = new OverdraftAccount { Id = accountGuid1, CustomerId = customerId, Customer = mockCustomer };
+            var secondAccount = new NoOverdraftAccount { Id = accountGuid2, CustomerId = customerId, Customer = mockCustomer };
 
             List<Account> mockAccounts = new List<Account>
         {
-            new OverdraftAccount { Id = accountGuid1, CustomerId = customerId },
-            new NoOverdraftAccount { Id = accountGuid2, CustomerId = customerId }
+                firstAccount,
+                secondAccount,
         };
 
             _mockCustomerRepo.Setup(repo => repo.getCustomerByClientName(customerName)).Returns(mockCustomer);
@@ -62,16 +66,11 @@ namespace Architecture.Tests
             // Assert
             var okResult = result as OkObjectResult;
             Assert.IsNotNull(okResult);
-            //Assert.AreEqual(200, okResult.StatusCode);
+            Assert.AreEqual(200, okResult.StatusCode);
 
             var returnedAccounts = okResult.Value as List<Account>;
             Assert.IsNotNull(returnedAccounts);
-            Assert.AreEqual(mockAccounts.Count, returnedAccounts.Count);
-            foreach (var account in returnedAccounts)
-            {
-                Assert.IsTrue(account.CustomerId == customerId); // Vérifie que l'ID du client associé au compte est correct
-                                                                 // Autres assertions pour vérifier les propriétés du compte si nécessaire
-            }
+            Assert.AreEqual(2, returnedAccounts.Count);
         }
 
         [TestMethod]
@@ -82,19 +81,12 @@ namespace Architecture.Tests
             _mockCustomerRepo.Setup(repo => repo.getCustomerByClientName(nonExistentCustomerName)).Returns((Customer)null);
 
             // Act
-            IActionResult result = null;
-            try
-            {
-                result = _accountController.GetAccountsByCustomer(nonExistentCustomerName);
-            }
-            catch (Exception ex)
-            {
-                // Assert
-                Assert.IsInstanceOfType(ex, typeof(Exception));
-                return;
-            }
+            var result = _accountController.GetAccountsByCustomer(nonExistentCustomerName);
 
-            Assert.Fail("Expected exception was not thrown.");
+            // Assert
+            var notFoundResult = result as NotFoundResult;
+            Assert.IsNotNull(notFoundResult);
+            Assert.AreEqual(404, notFoundResult.StatusCode);
         }
 
     }

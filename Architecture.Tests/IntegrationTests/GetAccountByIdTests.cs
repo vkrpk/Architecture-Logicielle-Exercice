@@ -35,7 +35,7 @@ namespace Architecture.Tests
             _noOverdraftAccountRepository = new NoOverdraftAccountRepository(_mockContext.Object);
             _accountRepository = new AccountRepository(_mockContext.Object);
             _customerRepository = new CustomerRepository(_mockContext.Object);
-            _accountController = new AccountController(_accountRepository, _noOverdraftAccountRepository, _customerRepository);
+            _accountController = new AccountController(_mockAccountRepo.Object, _noOverdraftAccountRepository, _mockCustomerRepo.Object);
         }
 
         [TestMethod]
