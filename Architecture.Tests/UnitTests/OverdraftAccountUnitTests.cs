@@ -6,39 +6,39 @@ using Moq;
 namespace Architecture.Tests
 {
     [TestClass]
-    public class OverdraftAccountTests
+    public class OverdraftAccountUnitTests
     {
         private OverdraftAccount _overdraftAccount;
-        private OverdraftAccountRepository _mockOverdraftAccountRepository;
+        private OverdraftAccountRepository _overdraftAccountRepository;
         private Mock<AppDbContext> _mockContext;
 
         [TestInitialize]
         public void Init()
         {
             _mockContext = new Mock<AppDbContext>();
-            _mockOverdraftAccountRepository = new OverdraftAccountRepository(_mockContext.Object);
+            _overdraftAccountRepository = new OverdraftAccountRepository(_mockContext.Object);
             _overdraftAccount = new OverdraftAccount();
         }
 
         [TestMethod]
         public void CreditOverdraftAccountNominalTest()
         {
-            var result = _mockOverdraftAccountRepository.Credit(100, _overdraftAccount);
+            var result = _overdraftAccountRepository.Credit(100, _overdraftAccount);
             Assert.AreEqual(100, result);
         }
 
         [TestMethod]
         public void DebitOverdraftAccountNominalTest()
         {
-            var result = _mockOverdraftAccountRepository.Debit(100, _overdraftAccount);
+            var result = _overdraftAccountRepository.Debit(100, _overdraftAccount);
             Assert.AreEqual(-100, result);
         }
 
         [TestMethod]
         public void DebitOverdraftAccountNegativeBalanceTest()
         {
-            _mockOverdraftAccountRepository.Credit(100, _overdraftAccount);
-            var result = _mockOverdraftAccountRepository.Debit(100, _overdraftAccount);
+            _overdraftAccountRepository.Credit(100, _overdraftAccount);
+            var result = _overdraftAccountRepository.Debit(100, _overdraftAccount);
             Assert.AreEqual(0, result);
         }
     }

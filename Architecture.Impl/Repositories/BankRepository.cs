@@ -19,7 +19,7 @@ namespace Architecture.Impl.Repositories
 
             if (account.Customer.Name == clientName)
             {
-                _accountRepository.Debit(amount, account);
+               _accountRepository.Debit(amount, account);
             }
         }
 
@@ -33,9 +33,9 @@ namespace Architecture.Impl.Repositories
             }
         }
 
-        public async void AccountOpening(string clientName, bool isOverdraftAllowed)
+        public void AccountOpening(string clientName, bool isOverdraftAllowed)
         {
-            Customer customer = await _customerRepository.getCustomerByClientName(clientName);
+            Customer customer = _customerRepository.getCustomerByClientName(clientName);
             if (customer != null) 
             {
                 _accountRepository.createAccount(customer, isOverdraftAllowed);

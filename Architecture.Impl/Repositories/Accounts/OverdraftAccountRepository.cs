@@ -13,6 +13,9 @@ namespace Architecture.Impl.Repositories
         public override int Debit(int amount, Account account)
     {
             account.Balance -= amount;
+
+            updateAccount(account);
+
             return account.Balance;
 
         }

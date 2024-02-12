@@ -28,7 +28,7 @@ namespace Architecture.Impl.Repositories
             }
         }
 
-        public Account getAccountByNumber(Guid accountNumber) 
+        public Account getAccountByNumber(Guid accountNumber)
         {
             try
             {
@@ -43,20 +43,16 @@ namespace Architecture.Impl.Repositories
 
         public List<Account> getAllAccounts()
         {
-            return _context.Accounts.ToList();
-        }
-        public List<Account> getAccountsByCustomer(Customer customer)
-        {
-            return _context.Accounts.Where(a => a.CustomerId == customer.Id).ToList();
+            return _context.Accounts?.ToList();
         }
 
         public Account createAccount(Customer customer, bool isOverdraftAllowed)
         {
             Account newAccount;
-            if(isOverdraftAllowed)
-                newAccount = new OverdraftAccount();
-            else 
-                newAccount = new NoOverdraftAccount();
+            if (isOverdraftAllowed)
+                newAccount = new OverdraftAccount { Customer = customer };
+            else
+                newAccount = new NoOverdraftAccount { Customer = customer };
 
             EntityEntry<Account> createdAccount = _context.Accounts.Add(newAccount);
             _context.SaveChanges();
@@ -90,11 +86,16 @@ namespace Architecture.Impl.Repositories
             return account.Balance;
         }
 
-        public virtual int Credit(int amount, Account account)
+        public int Credit(int amount, Account account)
         {
             account.Balance += amount;
+            updateAccount(account);
             return account.Balance;
         }
 
+        public List<Account> getAccountsByCustomer(Customer customer)
+        {
+            return _context.Accounts.Where(a => a.CustomerId == customer.Id).ToList();
+        }
     }
 }
