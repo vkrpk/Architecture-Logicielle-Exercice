@@ -78,3 +78,5 @@ _[Ss]cripts
 *.dot[Cc]over
 *.vs
 /Architecture/.vs/Architecture/DesignTimeBuild/.dtbcache.v2
+/Architecture/appsettings.json
+/Architecture/appsettings.Development.json

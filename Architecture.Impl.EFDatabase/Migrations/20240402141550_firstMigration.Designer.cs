@@ -12,15 +12,15 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Architecture.Impl.EFDatabase.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240209132016_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20240402141550_firstMigration")]
+    partial class firstMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.1")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -125,13 +125,13 @@ namespace Architecture.Impl.EFDatabase.Migrations
                     b.HasOne("Architecture.Domain.Models.Bank", "Bank")
                         .WithMany("Accounts")
                         .HasForeignKey("BankId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Architecture.Domain.Models.Customer", "Customer")
                         .WithMany("Accounts")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Bank");
@@ -144,7 +144,7 @@ namespace Architecture.Impl.EFDatabase.Migrations
                     b.HasOne("Architecture.Domain.Models.Bank", "Bank")
                         .WithMany("Customers")
                         .HasForeignKey("BankId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Bank");

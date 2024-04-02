@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Architecture.Impl.EFDatabase.Mappings
 {
-    internal static class CustomerMapping 
+    internal static class CustomerMapping
     {
         public static EntityTypeBuilder MapCustomer(this ModelBuilder modelbuilder)
         {
@@ -17,11 +17,15 @@ namespace Architecture.Impl.EFDatabase.Mappings
 
             builder.HasMany(c => c.Accounts)
                 .WithOne(a => a.Customer)
-                .HasForeignKey(a => a.CustomerId);
+                .HasForeignKey(a => a.CustomerId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
             builder.HasOne(c => c.Bank)
-                 .WithMany(a => a.Customers)
-                 .HasForeignKey(c => c.BankId);
+                .WithMany(a => a.Customers)
+                .HasForeignKey(c => c.BankId)
+                .OnDelete(DeleteBehavior.NoAction);
+
 
             return builder;
         }

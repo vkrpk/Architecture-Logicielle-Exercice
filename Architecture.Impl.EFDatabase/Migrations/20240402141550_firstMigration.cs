@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Architecture.Impl.EFDatabase.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class firstMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -39,8 +39,7 @@ namespace Architecture.Impl.EFDatabase.Migrations
                         name: "FK_Customers_Banks_BankId",
                         column: x => x.BankId,
                         principalTable: "Banks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -62,14 +61,12 @@ namespace Architecture.Impl.EFDatabase.Migrations
                         name: "FK_Accounts_Banks_BankId",
                         column: x => x.BankId,
                         principalTable: "Banks",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Accounts_Customers_CustomerId",
                         column: x => x.CustomerId,
                         principalTable: "Customers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
