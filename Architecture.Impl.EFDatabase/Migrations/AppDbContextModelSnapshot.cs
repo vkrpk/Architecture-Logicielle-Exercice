@@ -122,13 +122,13 @@ namespace Architecture.Impl.EFDatabase.Migrations
                     b.HasOne("Architecture.Domain.Models.Bank", "Bank")
                         .WithMany("Accounts")
                         .HasForeignKey("BankId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Architecture.Domain.Models.Customer", "Customer")
                         .WithMany("Accounts")
                         .HasForeignKey("CustomerId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Bank");
@@ -141,7 +141,7 @@ namespace Architecture.Impl.EFDatabase.Migrations
                     b.HasOne("Architecture.Domain.Models.Bank", "Bank")
                         .WithMany("Customers")
                         .HasForeignKey("BankId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Bank");

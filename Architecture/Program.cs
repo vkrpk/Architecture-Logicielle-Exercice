@@ -10,8 +10,14 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
         builder.Services.AddRazorPages();
+
+        var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
+        var dbName = Environment.GetEnvironmentVariable("DB_NAME");
+        var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
+        var connectionString = $"Data Source=127.0.0.1,8002;Initial Catalog={dbName};User ID=sa;Password={dbPassword};Encrypt=False;";
+        Console.WriteLine($"Chaîne de connexion: {connectionString}");
+        builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
         #region Ajout DI Repositories
         builder.Services.AddScoped<IAccountRepository, AccountRepository>();
@@ -19,8 +25,6 @@ internal class Program
         builder.Services.AddScoped<IBankRepository, BankRepository>();
         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         #endregion
-
-        builder.Services.AddDbContext<AppDbContext>();
 
         builder.Services.AddControllers();
         builder.Services.AddSwaggerGen(c =>
