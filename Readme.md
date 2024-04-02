@@ -49,7 +49,7 @@ L'Arborescence de cette application est organisée comme suit :
 
 Des tests unitaires et des tests d'intégration ont été réalisés dans le projet "Architecture.Tests".
 
-## Optionnel | Base de données avec Entity Framework :
+## Base de données avec Entity Framework :
 
 Cette application est faite en langage C#, avec le framework ASP.NET
 Une base de données peut être générée (sans données) grâce à Entity Framework Core (veillez à bien installer les packages au préalable)
