@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Architecture.Impl.EFDatabase.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240402133943_firstMigration")]
+    [Migration("20240402141550_firstMigration")]
     partial class firstMigration
     {
         /// <inheritdoc />
@@ -20,7 +20,7 @@ namespace Architecture.Impl.EFDatabase.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.1")
+                .HasAnnotation("ProductVersion", "8.0.3")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);

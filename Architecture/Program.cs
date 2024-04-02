@@ -6,18 +6,12 @@ using Microsoft.OpenApi.Models;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        // Add services to the container.
         builder.Services.AddRazorPages();
-
-        var dbHost = Environment.GetEnvironmentVariable("DB_HOST");
-        var dbName = Environment.GetEnvironmentVariable("DB_NAME");
-        var dbPassword = Environment.GetEnvironmentVariable("DB_SA_PASSWORD");
-        var connectionString = $"Data Source=127.0.0.1,8002;Initial Catalog={dbName};User ID=sa;Password={dbPassword};Encrypt=False;";
-        Console.WriteLine($"Chaîne de connexion: {connectionString}");
-        builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 
         #region Ajout DI Repositories
         builder.Services.AddScoped<IAccountRepository, AccountRepository>();
@@ -25,6 +19,9 @@ internal class Program
         builder.Services.AddScoped<IBankRepository, BankRepository>();
         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         #endregion
+
+        builder.Services.AddDbContext<AppDbContext>(options =>
+            options.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
 
         builder.Services.AddControllers();
         builder.Services.AddSwaggerGen(c =>
@@ -46,11 +43,23 @@ internal class Program
 
         app.UseRouting();
 
-
         app.UseAuthorization();
 
         app.MapRazorPages();
 
+        await SeedInitData(app);
+
         app.Run();
+
+        async Task SeedInitData(WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                using (var ctx = scope.ServiceProvider.GetRequiredService<AppDbContext>())
+                {
+                    await ctx.Database.MigrateAsync();
+                }
+            }
+        }
     }
 }

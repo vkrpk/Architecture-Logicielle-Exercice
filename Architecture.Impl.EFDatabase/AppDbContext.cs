@@ -12,16 +12,16 @@ namespace Architecture.Impl.EFDatabase
         public DbSet<NoOverdraftAccount> NoOverdraftAccounts { get; set; }
         public DbSet<Customer> Customers { get; set; }
 
-        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)        {
+        public AppDbContext() { }
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
+        {
             Banks = Set<Bank>();
             Accounts = Set<Account>();
             OverdraftAccounts = Set<OverdraftAccount>();
             NoOverdraftAccounts = Set<NoOverdraftAccount>();
             Customers = Set<Customer>();
-        }
 
-        // protected override void OnConfiguring(DbContextOptionsBuilder options)
-        //     => options.UseSqlServer("Votre chaîne de connexion ici");
+        }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
