@@ -10,7 +10,6 @@ internal class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        // Add services to the container.
         builder.Services.AddRazorPages();
 
         #region Ajout DI Repositories
@@ -54,12 +53,21 @@ internal class Program
 
         async Task SeedInitData(WebApplication app)
         {
-            using (var scope = app.Services.CreateScope())
+            try
             {
-                using (var ctx = scope.ServiceProvider.GetRequiredService<AppDbContext>())
+                using (var scope = app.Services.CreateScope())
                 {
-                    await ctx.Database.MigrateAsync();
+                    var services = scope.ServiceProvider;
+                    var ctx = services.GetRequiredService<AppDbContext>();
+                    if (ctx.Database.CanConnect())
+                    {
+                        await ctx.Database.MigrateAsync();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while seeding the database: {ex.Message}");
             }
         }
     }

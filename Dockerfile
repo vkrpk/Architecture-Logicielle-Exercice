@@ -1,5 +1,9 @@
 ﻿FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
+
+RUN useradd -m appuser
+
+USER appuser
+
 WORKDIR /app
 EXPOSE 8080
 EXPOSE 8081
@@ -20,4 +24,11 @@ RUN dotnet publish "Architecture.csproj" -c $BUILD_CONFIGURATION -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+
+USER root
+RUN mkdir -p /home/app/.aspnet/DataProtection-Keys && \
+    chown -R appuser:appuser /home/app/.aspnet && \
+    chmod -R 700 /home/app/.aspnet/DataProtection-Keys
+USER appuser
+
 ENTRYPOINT ["dotnet", "Architecture.dll"]
