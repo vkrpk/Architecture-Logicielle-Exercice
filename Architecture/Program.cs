@@ -22,6 +22,7 @@ internal class Program
 
         builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
+        // Console.WriteLine(builder.Configuration.GetConnectionString("Database"));
 
         builder.Services.AddControllers();
         builder.Services.AddSwaggerGen(c =>
