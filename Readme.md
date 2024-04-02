@@ -6,7 +6,28 @@ Dernière mise-à-jour le : [08/02/2024].
 
 ## Titre du projet : Premier exercice d'architecture logicielle (Application Banque)
 
-## Conditions environnementales / experimentales : 
+## Démarrage de l'application : 
+
+Avant de démarrer l'application, il convient de créer un fichier "appsettings.json" dans le projet "Architecture".
+En se suivant ce modèle (appsettings.Template.json) :
+
+```
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "Database": "Your connection string here"
+  }
+}
+
+```
+Remplacer "Your connection string here" par la chaîne de connexion souhaitée vers la base de données. 
+
 
 ## Informations concernant l'application :
 
@@ -63,21 +84,3 @@ Exécutez la commande suivante pour démarrer tous les services :
 docker compose up -d
 ```
 
-## Autres informations contextuelles :
-<Toute information que vous considérez importante pour évaluer la qualité du jeu de données ou pour sa réutilisation : par exemple, des informations concernant les logiciels nécessaires pour interpréter les données.
-Si applicable et non-inclus préalablement, ajouter les noms complets et les versions de tous les logiciels, de tous les paquets et de toutes les librairies nécessaires pour lire et interpréter les données *e.g.* pour compiler les scripts.>
-
-
-
-
-# INFORMATIONS SPECIFIQUES AUX DONNEES POUR : [NOM DU FICHIER]
-
-<Le cas échéant, reproduire cette section pour chaque dossier ou fichier.
-Les éléments se répétant peuvent être expliqués dans une section initiale commune.>
-
-<Pour les données tabulaires, fournir un dictionnaire des données/manuel de codage contenant les informations suivantes :>
-## Liste des variables/entêtes de colonne :
-
-Pour chaque nom de variable ou entête de colonne, indiquer :
- 
-    -- le nom complet de la variable sous forme “lisible par les humains” ; 
