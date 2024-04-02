@@ -49,19 +49,10 @@ L'Arborescence de cette application est organisée comme suit :
 
 Des tests unitaires et des tests d'intégration ont été réalisés dans le projet "Architecture.Tests".
 
-## Optionnel | Base de données avec Entity Framework :
+## Base de données avec Entity Framework :
 
 Cette application est faite en langage C#, avec le framework ASP.NET
 Une base de données peut être générée (sans données) grâce à Entity Framework Core (veillez à bien installer les packages au préalable)
-Voici la procédure en ouvrant la solution avec Visual Studio : 
-- Accéder au code de la classe "ApDbContext"
-- Modifier la chaine de connexion dans la méthode OnConfiguring (cf "Votre chaîne de connexion ici")
-- Faire un click droit sur le projet "Architecture.Impl.EFDatabase
-- Cliquer sur "ouvrir avec le terminal"
-- Dans le terminal, rentrer les lignes de code suivantes : 
-    dotnet ef migrations add InitialCreate
-    dotnet ef database update
-- Une base de données se crée ensuite
 
 ## Optionnel | Démarrage de l'application avec Swagger :
 
