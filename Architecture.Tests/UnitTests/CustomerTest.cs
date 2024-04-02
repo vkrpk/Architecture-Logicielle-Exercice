@@ -11,7 +11,7 @@ namespace Architecture.Tests;
 public class CustomerTest
 {
     private Mock<AppDbContext> _mockContext;
-    private CustomerRepository _mockCustomeRepository;
+    private Mock<ICustomerRepository> _mockCustomerRepo;
 
     [TestInitialize]
     public void Init()
@@ -19,7 +19,7 @@ public class CustomerTest
         _mockContext = new Mock<AppDbContext>();
         var mockSet = new Mock<DbSet<Customer>>();
         _mockContext.Setup(m => m.Customers).Returns(mockSet.Object);
-        _mockCustomeRepository = new CustomerRepository(_mockContext.Object);
+        _mockCustomerRepo = new Mock<ICustomerRepository>();
     }
 
     [TestMethod]
@@ -27,22 +27,9 @@ public class CustomerTest
     {
         var customer = new Customer();
 
-        var result = _mockCustomeRepository.createCustomer(customer);
+        _mockCustomerRepo.Object.createCustomer(customer);
 
-        Assert.IsInstanceOfType(result, typeof(Customer));
+        _mockCustomerRepo.Verify(x => x.createCustomer(customer), Times.Once);
+
     }
-
-    // public void DeleteCustomerNominalTest()
-    // {
-    //     // Arrange
-    //     var customerId = Guid.NewGuid();
-    //     var mockContext = new Mock<AppDbContext>();
-    //     var customerRepository = new CustomerRepository(mockContext.Object);
-    //
-    //     // Act
-    //     var result = customerRepository.deleteCustomer(customerId);
-    //
-    //     // Assert
-    //     Assert.IsNotNull(result);
-    // }
 }

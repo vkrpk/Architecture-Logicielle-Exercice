@@ -6,11 +6,11 @@ namespace Architecture.Impl.EFDatabase
 {
     public class AppDbContext : DbContext
     {
-        public DbSet<Bank> Banks { get; set; }
+        public virtual DbSet<Bank> Banks { get; set; }
         public virtual DbSet<Account> Accounts { get; set; }
-        public DbSet<OverdraftAccount> OverdraftAccounts { get; set; }
-        public DbSet<NoOverdraftAccount> NoOverdraftAccounts { get; set; }
-        public DbSet<Customer> Customers { get; set; }
+        public virtual DbSet<OverdraftAccount> OverdraftAccounts { get; set; }
+        public virtual DbSet<NoOverdraftAccount> NoOverdraftAccounts { get; set; }
+        public virtual DbSet<Customer> Customers { get; set; }
 
         public AppDbContext() { }
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
