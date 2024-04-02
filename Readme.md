@@ -1,6 +1,6 @@
 Ce fichier README a été généré le [08/02/2024] par [Groupe 1 : Arthur | Hervé | Laurine | Victor].
 
-Dernière mise-à-jour le : [08/02/2024].
+Dernière mise-à-jour le : [02/04/2024].
 
 # INFORMATIONS GENERALES
 
@@ -26,7 +26,7 @@ Avant de démarrer l'application, il convient de créer un fichier "appsettings.
 
 ```
 Remplacer "Your connection string here" par la chaîne de connexion souhaitée vers la base de données. 
-
+Ainsi, au démarrage de l'application, une base de données sera créée automatiquement, et sera placée au chemin indiqué. 
 
 ## Informations concernant l'application :
 
