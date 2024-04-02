@@ -6,7 +6,7 @@ using Microsoft.OpenApi.Models;
 
 internal class Program
 {
-    private static void Main(string[] args)
+    private static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -20,7 +20,8 @@ internal class Program
         builder.Services.AddScoped<ICustomerRepository, CustomerRepository>();
         #endregion
 
-        builder.Services.AddDbContext<AppDbContext>();
+        builder.Services.AddDbContext<AppDbContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("Database")));
 
         builder.Services.AddControllers();
         builder.Services.AddSwaggerGen(c =>
@@ -42,11 +43,23 @@ internal class Program
 
         app.UseRouting();
 
-
         app.UseAuthorization();
 
         app.MapRazorPages();
 
+        await SeedInitData(app);
+
         app.Run();
+
+        async Task SeedInitData(WebApplication app)
+        {
+            using (var scope = app.Services.CreateScope())
+            {
+                using (var ctx = scope.ServiceProvider.GetRequiredService<AppDbContext>())
+                {
+                    await ctx.Database.MigrateAsync();
+                }
+            }
+        }
     }
 }
