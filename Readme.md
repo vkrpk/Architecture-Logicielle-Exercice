@@ -71,6 +71,6 @@ Vous pouvez démarrer l'application en utilisant Docker Compose.
 Naviguez jusqu'à la racine du projet où se trouve le fichier docker-compose.yml.  
 Exécutez la commande suivante pour démarrer tous les services :  
 ```bash
-docker compose up -d
+docker compose up -d && dotnet ef database update
 ```
 
