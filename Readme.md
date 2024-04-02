@@ -68,9 +68,27 @@ URL du tableau de bord SonarCloud : [sonarcloud](https://sonarcloud.io/summary/o
 ## Démarrage de l'application avec Docker :
 Pour faciliter le déploiement et assurer la cohérence des environnements de développement, nous avons dockerisé l'application.   
 Vous pouvez démarrer l'application en utilisant Docker Compose.  
-Naviguez jusqu'à la racine du projet où se trouve le fichier docker-compose.yml.  
-Exécutez la commande suivante pour démarrer tous les services :  
+Veuillez naviguer jusqu'au dossier Architecture où se situe le fichier Program.cs.
+Vous pouvez ensuite créer un fichier appsettings.json et le placer dans ce dossier.
+```javascript
+{
+  "Logging": {
+    "LogLevel": {
+      "Default": "Information",
+      "Microsoft.AspNetCore": "Warning"
+    }
+  },
+  "AllowedHosts": "*",
+  "ConnectionStrings": {
+    "Database": "Server=127.0.0.1,8002;Database=dbname;User Id=sa;Password=password@12345#;Encrypt=False;MultipleActiveResultSets=True;"
+  }
+}
+```
+
+Veuillez ensuite exécuter la commande suivante pour démarrer l'applciation et créer la base de données :
 ```bash
 docker compose up -d && dotnet ef database update
 ```
+
+
 
