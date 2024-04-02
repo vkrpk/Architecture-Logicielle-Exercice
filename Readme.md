@@ -85,7 +85,7 @@ Vous pouvez ensuite créer un fichier appsettings.json et le placer dans ce doss
 }
 ```
 
-Veuillez ensuite exécuter la commande suivante pour démarrer l'applciation et créer la base de données :
+Veuillez ensuite exécuter la commande suivante pour démarrer l'application et créer la base de données :
 ```bash
 docker compose up -d && dotnet ef database update
 ```
