@@ -8,8 +8,7 @@ Dernière mise-à-jour le : [08/02/2024].
 
 ## Démarrage de l'application : 
 
-Avant de démarrer l'application, il convient de créer un fichier "appsettings.json" dans le projet "Architecture".
-En se suivant ce modèle (appsettings.Template.json) :
+Avant de démarrer l'application, il convient de créer un fichier "appsettings.json" dans le projet "Architecture" en se suivant ce modèle (appsettings.Template.json) :
 
 ```
 {
