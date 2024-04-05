@@ -1,12 +1,21 @@
-Ce fichier README a été généré le [08/02/2024] par [Groupe 1 : Arthur | Hervé | Laurine | Victor].
+# API REST pour la récupération de clients et de leurs comptes bancaires
 
-Dernière mise-à-jour le : [02/04/2024].
+## Installation de l'application :
+```bash
+docker compose up -d
+```
+L'application sera alors accessible à l'adresse suivante :   
+http://localhost:8000/swagger
 
-# INFORMATIONS GENERALES
+La base de données sera accessible à l'adresse suivante :  
+http://localhost:8080  
+Pour administrer cette base de données, vous pouvez utiliser les identifiants suivants :
+- Système : MS SQL (beta)
+- Serveur : app-db
+- Utilisateur : sa
+- Mot de passe : password@12345#
 
-## Titre du projet : Premier exercice d'architecture logicielle (Application Banque)
-
-## Démarrage de l'application : 
+## Installation de l'application (sans Docker) :
 
 Avant de démarrer l'application, il convient de créer un fichier "appsettings.json" dans le projet "Architecture" en se suivant ce modèle (appsettings.Template.json) :
 
@@ -59,36 +68,14 @@ Une base de données peut être générée (sans données) grâce à Entity Fram
 Au lancement de l'application (veilez à bien avoir comme projet de démarrage Architecture), une fenêtre de navigateur d'ouvre, montrant une erreur 404. 
 Afin d'accéder à l'interface de swagger pour tester les méthodes des contrôleurs, il suffit de rajouter "/swagger" dans l'URL. 
 
-
 ## Procédures d’assurance-qualité appliquées sur le code :
 Pour assurer une haute qualité du code et une maintenance facile de l'application, nous avons intégré SonarCloud, un service d'analyse continue. SonarCloud analyse automatiquement notre code pour détecter les bugs, les vulnérabilités, et les "code smells", tout en fournissant des feedbacks sur la couverture des tests.
 
 URL du tableau de bord SonarCloud : [sonarcloud](https://sonarcloud.io/summary/overall?id=vkrpk_Architecture-Logicielle-Exercice)
 
-## Démarrage de l'application avec Docker :
-Pour faciliter le déploiement et assurer la cohérence des environnements de développement, nous avons dockerisé l'application.   
-Vous pouvez démarrer l'application en utilisant Docker Compose.  
-Veuillez naviguer jusqu'au dossier Architecture où se situe le fichier Program.cs.
-Vous pouvez ensuite créer un fichier appsettings.json et le placer dans ce dossier.
-```javascript
-{
-  "Logging": {
-    "LogLevel": {
-      "Default": "Information",
-      "Microsoft.AspNetCore": "Warning"
-    }
-  },
-  "AllowedHosts": "*",
-  "ConnectionStrings": {
-    "Database": "Server=127.0.0.1,8002;Database=dbname;User Id=sa;Password=password@12345#;Encrypt=False;MultipleActiveResultSets=True;"
-  }
-}
-```
+Dernière mise-à-jour le : [05/04/2024]
 
-Veuillez ensuite exécuter la commande suivante pour démarrer l'application et créer la base de données :
-```bash
-docker compose up -d && dotnet ef database update
-```
+
 
 
 

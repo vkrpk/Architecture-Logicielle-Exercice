@@ -27,13 +27,14 @@ internal class Program
 
         if(dbPort == null || dbHost == null || dbName == null || dbPassword == null)
         {
+            Console.WriteLine(dbPort, dbHost, dbName, dbPassword);
             connectionString = builder.Configuration.GetConnectionString("Database") ?? "";
         }
         else
         {
             connectionString = $"Server={dbHost},{dbPort};Database={dbName};User Id=sa;Password={dbPassword};Encrypt=False;MultipleActiveResultSets=True;";
         }
-
+        Console.WriteLine($"Connection String: {connectionString}");
         builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString));
 
@@ -50,6 +51,20 @@ internal class Program
 
         var app = builder.Build();
 
+        using (var scope = app.Services.CreateScope())
+        {
+            var services = scope.ServiceProvider;
+            try
+            {
+                var context = services.GetRequiredService<AppDbContext>();
+                context.Database.Migrate();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while seeding the database: {ex.Message}");
+            }
+        }
+
         app.UseHttpsRedirection();
         app.UseStaticFiles();
 
@@ -62,28 +77,6 @@ internal class Program
 
         app.MapRazorPages();
 
-        await SeedInitData(app);
-
         app.Run();
-
-        async Task SeedInitData(WebApplication app)
-        {
-            try
-            {
-                using (var scope = app.Services.CreateScope())
-                {
-                    var services = scope.ServiceProvider;
-                    var ctx = services.GetRequiredService<AppDbContext>();
-                    if (ctx.Database.CanConnect())
-                    {
-                        await ctx.Database.MigrateAsync();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"An error occurred while seeding the database: {ex.Message}");
-            }
-        }
     }
 }

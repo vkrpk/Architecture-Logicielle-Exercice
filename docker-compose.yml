@@ -3,39 +3,9 @@ networks:
     driver: bridge
 
 services:
-#  db-migrations:
-#    networks:
-#      - apparchitecture
-#    image: migration-image:latest
-#    build:
-#      context: .
-#      dockerfile: Dockerfile.db
-#    depends_on:
-#      - appdb
-#    ports:
-#      - 8000:8080
-#    container_name: architecture
-#    volumes:
-#      - data_protection_keys:/home/app/.aspnet/DataProtection-Keys
-#    environment:
-#      - DB_HOST=app-db
-#      - DB_NAME=dbname
-#      - DB_SA_PASSWORD=password@12345#
-#    volumes:
-#      - ./path-to-your-script:/scripts/healthcheck.sh
-#    healthcheck:
-#      test: [ "CMD-SHELL", "/src/wait-for-it/wait-for-it.sh db:1433 -- dotnet ef database update" ]
-#      interval: 30s
-#      timeout: 10s
-#      retries: 3
-#      start_period: 10s
   architecture:
     depends_on:
       - appdb
-#    image: app-image:latest
-#    depends_on:
-#      db-migrations:
-#        condition: service_healthy
     ports:
       - 8000:8080
     container_name: architecture
@@ -48,6 +18,7 @@ services:
       - DB_HOST=app-db
       - DB_NAME=dbname
       - DB_SA_PASSWORD=password@12345#
+      - DB_PORT=1433
     networks:
       - apparchitecture
   appdb:
