@@ -35,19 +35,3 @@ CMD ["/wait-for-it/wait-for-it.sh", "app-db:1433", "--", "dotnet", "ef", "databa
 RUN mkdir -p /app/build && chown -R appuser:appuser /app
 WORKDIR "/src/Architecture"
 RUN dotnet build "Architecture.csproj" -c $BUILD_CONFIGURATION -o /app/build
-
-#FROM build AS publish
-#ARG BUILD_CONFIGURATION=Release
-#RUN dotnet publish "Architecture.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
-#
-#FROM base AS final
-#WORKDIR /app
-#COPY --from=publish /app/publish .
-#
-#USER root
-#RUN mkdir -p /home/app/.aspnet/DataProtection-Keys && \
-#    chown -R appuser:appuser /home/app/.aspnet && \
-#    chmod -R 700 /home/app/.aspnet/DataProtection-Keys
-#USER appuser
-#
-#ENTRYPOINT ["dotnet", "Architecture.dll"]
