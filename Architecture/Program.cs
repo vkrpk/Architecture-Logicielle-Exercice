@@ -27,14 +27,13 @@ internal class Program
 
         if(dbPort == null || dbHost == null || dbName == null || dbPassword == null)
         {
-            Console.WriteLine(dbPort, dbHost, dbName, dbPassword);
             connectionString = builder.Configuration.GetConnectionString("Database") ?? "";
         }
         else
         {
             connectionString = $"Server={dbHost},{dbPort};Database={dbName};User Id=sa;Password={dbPassword};Encrypt=False;MultipleActiveResultSets=True;";
         }
-        Console.WriteLine($"Connection String: {connectionString}");
+
         builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString));
 
