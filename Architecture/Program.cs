@@ -77,5 +77,22 @@ internal class Program
         app.MapRazorPages();
 
         app.Run();
+
+        async Task SeedInitData(WebApplication app)
+        {
+            try
+            {
+                using (var scope = app.Services.CreateScope())
+                {
+                    var services = scope.ServiceProvider;
+                    var ctx = services.GetRequiredService<AppDbContext>();
+                    await ctx.Database.MigrateAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while seeding the database: {ex.Message}");
+            }
+        }
     }
 }
