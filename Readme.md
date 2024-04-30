@@ -1,12 +1,39 @@
-Ce fichier README a été généré le [08/02/2024] par [Groupe 1 : Arthur | Hervé | Laurine | Victor].
+# API REST pour la récupération de clients et de leurs comptes bancaires
 
-Dernière mise-à-jour le : [02/04/2024].
+## Informations concernant l'application :
+Cette application est une API réalisée en langage C#, avec le framework ASP.NET.  
+Le Framework Entity Framework Core a été utilisé pour gérer la base de données.  
+Le Framework MS Tests a été utilisé pour la création et réalisation de tests.
+Swagger a été utilisé pour documenter et avoir une interface sur laquelle tester les méthodes exposées par les endpoints de l'API.  
 
-# INFORMATIONS GENERALES
+### Arborescence :
+L'Arborescence de cette application est organisée comme suit :  
+- Architecture : Projet Web contenant les Contrôleurs  
+- Architecture.Domain : Projet Librairie contenant les Modèles  
+- Architecture.Impl : Projet Librairie contenant les Repositories  
+- Architecture.Impl.EFDatabase : Projet Librairie contenant la classe implémentée pour la base de données, les mappings et les migrations avec EF Core  
+- Architecture.Tests : Projet de tests MS Tests.  
 
-## Titre du projet : Premier exercice d'architecture logicielle (Application Banque)
+### Installation de l'application :
+```bash
+docker compose up -d
+```
+L'API sera alors accessible depuis ce [lien](http://localhost:8000/swagger) et l'administration de la base de données sera disponible depuis ce [lien](http://localhost:8080).  
+Vous pouvez vous connecter avec les identifiants suivants :
+- Système : MS SQL (beta)
+- Serveur : app-db
+- Utilisateur : sa
+- Mot de passe : password@12345#
 
-## Démarrage de l'application : 
+### Informations sur les tests :  
+Des tests unitaires et des tests d'intégration ont été réalisés dans le projet "Architecture.Tests".
+
+### Procédures d’assurance-qualité appliquées sur le code :
+Pour assurer une haute qualité du code et une maintenance facile de l'application, nous avons intégré SonarCloud, un service d'analyse continue. SonarCloud analyse automatiquement notre code pour détecter les bugs, les vulnérabilités, et les "code smells", tout en fournissant des feedbacks sur la couverture des tests.
+
+Le tableau de bord SonarCloud est accessible depuis ce [lien](https://sonarcloud.io/summary/overall?id=vkrpk_Architecture-Logicielle-Exercice).
+
+### Installation de l'application (sans Docker) :
 
 Avant de démarrer l'application, il convient de créer un fichier "appsettings.json" dans le projet "Architecture" en se suivant ce modèle (appsettings.Template.json) :
 
@@ -28,49 +55,22 @@ Avant de démarrer l'application, il convient de créer un fichier "appsettings.
 Remplacer "Your connection string here" par la chaîne de connexion souhaitée vers la base de données. 
 Ainsi, au démarrage de l'application, une base de données sera créée automatiquement, et sera placée au chemin indiqué. 
 
-## Informations concernant l'application :
 
-Cette application est une API réalisée en langage C#, avec le framework ASP.NET.
-Le Framework Entity Framework Core a été utilisé pour gérer la base de données.
-Le Framework MS Tests a été utilisé pour la création et réalisation de tests.
-Swagger a été utilisé pour documenter et avoir une interface sur laquelle tester les méthodes exposées par les endpoints de l'API. 
 
-### Arborescence : 
 
-L'Arborescence de cette application est organisée comme suit : 
-
-    - Architecture : Projet Web contenant les Contrôleurs
-    - Architecture.Domain : Projet Librairie contenant les Modèles
-    - Architecture.Impl : Projet Librairie contenant les Repositories
-    - Architecture.Impl.EFDatabase : Projet Librairie contenant la classe implémentée pour la base de données, les mappings et les migrations avec EF Core
-    - Architecture.Tests : Projet de tests MS Tests. 
-
-## Informations sur les tests :
-
-Des tests unitaires et des tests d'intégration ont été réalisés dans le projet "Architecture.Tests".
-
-## Base de données avec Entity Framework :
+### Base de données avec Entity Framework :
 
 Cette application est faite en langage C#, avec le framework ASP.NET
 Une base de données peut être générée (sans données) grâce à Entity Framework Core (veillez à bien installer les packages au préalable)
 
-## Optionnel | Démarrage de l'application avec Swagger :
+### Optionnel | Démarrage de l'application avec Swagger :
 
-Au lancement de l'application (veilez à bien avoir comme projet de démarrage Architecture), une fenêtre de navigateur d'ouvre, montrant une erreur 404. 
-Afin d'accéder à l'interface de swagger pour tester les méthodes des contrôleurs, il suffit de rajouter "/swagger" dans l'URL. 
+Au lancement de l'application (veillez à bien avoir comme projet de démarrage Architecture), une fenêtre de navigateur d'ouvre, montrant une erreur 404. 
+Afin d'accéder à l'interface de swagger pour tester les méthodes des contrôleurs, il suffit de rajouter "/swagger" dans l'URL.
+
+Dernière mise-à-jour le : [05/04/2024]
 
 
-## Procédures d’assurance-qualité appliquées sur le code :
-Pour assurer une haute qualité du code et une maintenance facile de l'application, nous avons intégré SonarCloud, un service d'analyse continue. SonarCloud analyse automatiquement notre code pour détecter les bugs, les vulnérabilités, et les "code smells", tout en fournissant des feedbacks sur la couverture des tests.
 
-URL du tableau de bord SonarCloud : [sonarcloud](https://sonarcloud.io/summary/overall?id=vkrpk_Architecture-Logicielle-Exercice)
 
-## Démarrage de l'application avec Docker :
-Pour faciliter le déploiement et assurer la cohérence des environnements de développement, nous avons dockerisé l'application.   
-Vous pouvez démarrer l'application en utilisant Docker Compose.  
-Naviguez jusqu'à la racine du projet où se trouve le fichier docker-compose.yml.  
-Exécutez la commande suivante pour démarrer tous les services :  
-```bash
-docker compose up -d
-```
 

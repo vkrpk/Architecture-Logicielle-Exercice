@@ -4,18 +4,21 @@ networks:
 
 services:
   architecture:
+    depends_on:
+      - appdb
     ports:
       - 8000:8080
     container_name: architecture
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     volumes:
       - data_protection_keys:/home/app/.aspnet/DataProtection-Keys
-    depends_on:
-      - appdb
     environment:
       - DB_HOST=app-db
       - DB_NAME=dbname
       - DB_SA_PASSWORD=password@12345#
+      - DB_PORT=1433
     networks:
       - apparchitecture
   appdb:
@@ -31,6 +34,8 @@ services:
     networks:
       - apparchitecture
   adminer:
+    depends_on:
+      - appdb
     image: adminer
     restart: always
     ports:
