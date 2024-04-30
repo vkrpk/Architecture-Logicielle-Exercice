@@ -1,7 +1,8 @@
-﻿using System;
-using Microsoft.AspNetCore.Mvc;
-using Architecture.Domain.Models;
+﻿using Architecture.Domain.Models;
 using Architecture.Impl.Repositories;
+using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Architecturee.Controllers
 {
@@ -40,7 +41,16 @@ namespace Architecturee.Controllers
             if (account == null)
                 return NotFound();
 
-            return Ok(account);
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+
+            string json = JsonSerializer.Serialize(account, options);
+
+            return Ok(json);
         }
 
         [HttpGet("byCustomer/{customerName}")]
@@ -49,14 +59,73 @@ namespace Architecturee.Controllers
             Customer customer = _customerRepo.getCustomerByClientName(customerName);
             if (customer == null)
                 return NotFound();
+
             else
             {
                 List<Account> accounts = _accountRepo.getAccountsByCustomer(customer);
-                return Ok(accounts);
+
+                var options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    WriteIndented = true
+                };
+
+                string json = JsonSerializer.Serialize(accounts, options);
+                return Ok(json);
             }
         }
 
-        [HttpPost("{amount}")]
+        [HttpPost]
+        public IActionResult CreateAccount(Account account)
+        {
+            Account newAccount = _accountRepo.createAccount(account);
+
+            if (newAccount == null)
+            {
+                return NotFound();
+            }
+
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+
+            string json = JsonSerializer.Serialize(newAccount, options);
+
+            return Ok(json);
+        }
+        [HttpPut]
+        public async Task<IActionResult> UpdateAccount(Account account)
+        {
+            Account updatedAccount = await _accountRepo.updateAccount(account);
+
+            if (updatedAccount == null)
+            {
+                return NotFound();
+            }
+
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+
+            string json = JsonSerializer.Serialize(updatedAccount, options);
+
+            return Ok(json);
+        }
+
+        [HttpDelete]
+        public void DeleteAccount(Guid id)
+        {
+            _accountRepo.deleteAccount(id);
+        }
+
+        [HttpPut("Debit/{amount}")]
         public IActionResult DebitAccount(int amount, [FromBody] Guid accountId)
         {
             Account account = _accountRepo.getAccountById(accountId);
@@ -66,6 +135,16 @@ namespace Architecturee.Controllers
                 DebitAccount<NoOverdraftAccount>(amount, account);
             return Ok(account);
         }
+        [HttpPut("Credit/{amount}")]
+        public IActionResult CreditAccount(int amount, [FromBody] Guid accountId)
+        {
+            Account account = _accountRepo.getAccountById(accountId);
+            if (account.IsOverdraftAllowed)
+                CreditAccount<OverdraftAccount>(amount, account);
+            else
+                CreditAccount<NoOverdraftAccount>(amount, account);
+            return Ok(account);
+        }
         private void DebitAccount<T>(int amount, Account account) where T : Account
         {
             var type = typeof(T);
@@ -73,7 +152,16 @@ namespace Architecturee.Controllers
                 _noOverdraftAccountRepo.Debit(amount, account); 
             else
                 _accountRepo.Debit(amount, account);
+        }        
+        private void CreditAccount<T>(int amount, Account account) where T : Account
+        {
+            var type = typeof(T);
+            if (type == typeof(NoOverdraftAccount))
+                _noOverdraftAccountRepo.Credit(amount, account); 
+            else
+                _accountRepo.Credit(amount, account);
         }
+
     }
 
 }
