@@ -1,6 +1,8 @@
 ﻿using Architecture.Domain.Models;
 using Architecture.Impl.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace Architecture.Controllers;
 
@@ -16,7 +18,7 @@ public class CustomerController : Controller
     }
 
     [HttpGet("{customerId}")]
-    public IActionResult getCustomerById(Guid customerId)
+    public IActionResult GetCustomerById(Guid customerId)
     {
         Customer customer = _customerRepository.getCustomerById(customerId);
 
@@ -24,12 +26,21 @@ public class CustomerController : Controller
         {
             return NotFound();
         }
+        var options = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.Preserve,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
 
-        return Ok(customer);
+        string json = JsonSerializer.Serialize(customer, options);
+
+        return Ok(json);
+
     }
 
     [HttpGet("byName/{clientName}")]
-    public IActionResult getCustomerByName(string clientName)
+    public IActionResult GetCustomerByName(string clientName)
     {
         Customer customer = _customerRepository.getCustomerByClientName(clientName);
 
@@ -38,11 +49,20 @@ public class CustomerController : Controller
             return NotFound();
         }
 
-        return Ok(customer);
+        var options = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.Preserve,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+
+        string json = JsonSerializer.Serialize(customer, options);
+
+        return Ok(json);
     }
 
     [HttpGet]
-    public IActionResult getAllCustomers()
+    public IActionResult GetAllCustomers()
     {
         List<Customer> customerArray = _customerRepository.getAllCustomer();
 
@@ -55,34 +75,51 @@ public class CustomerController : Controller
     }
 
     [HttpPost]
-    public IActionResult createCustomer(Customer customer)
+    public IActionResult CreateCustomer(Customer customer)
     {
-        Customer 
-            _customer = _customerRepository.createCustomer(customer);
+        Customer newCustomer = _customerRepository.createCustomer(customer);
 
-        if (_customer == null)
+        if (newCustomer == null)
         {
             return NotFound();
         }
 
-        return Ok(_customer);
+        var options = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.Preserve,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+
+        string json = JsonSerializer.Serialize(newCustomer, options);
+
+        return Ok(json);
     }
 
     [HttpPut("{customerId}")]
-    public IActionResult updateCustomer(Customer customer)
+    public IActionResult UpdateCustomer(Customer customer)
     {
-        Customer _customer = _customerRepository.updateCustomer(customer);
+        Customer newCustomer = _customerRepository.updateCustomer(customer);
 
         if (customer == null)
         {
             return NotFound();
         }
 
-        return Ok(_customer);
+        var options = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.Preserve,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+
+        string json = JsonSerializer.Serialize(newCustomer, options);
+
+        return Ok(json);
     }
 
     [HttpDelete("{customerId}")]
-    public IActionResult deleteCustomer(Guid customerId)
+    public IActionResult DeleteCustomer(Guid customerId)
     {
         string deletedCustomer = _customerRepository.deleteCustomer(customerId);
 
@@ -91,7 +128,16 @@ public class CustomerController : Controller
             return NotFound();
         }
 
-        return Ok(deletedCustomer);
+        var options = new JsonSerializerOptions
+        {
+            ReferenceHandler = ReferenceHandler.Preserve,
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+            WriteIndented = true
+        };
+
+        string json = JsonSerializer.Serialize(deletedCustomer, options);
+
+        return Ok(json);
     }
 
 
