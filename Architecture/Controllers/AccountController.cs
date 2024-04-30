@@ -2,6 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using Architecture.Domain.Models;
 using Architecture.Impl.Repositories;
+using System.Text.Json.Serialization;
+using System.Text.Json;
 
 namespace Architecturee.Controllers
 {
@@ -40,7 +42,16 @@ namespace Architecturee.Controllers
             if (account == null)
                 return NotFound();
 
-            return Ok(account);
+            var options = new JsonSerializerOptions
+            {
+                ReferenceHandler = ReferenceHandler.Preserve,
+                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                WriteIndented = true
+            };
+
+            string json = JsonSerializer.Serialize(account, options);
+
+            return Ok(json);
         }
 
         [HttpGet("byCustomer/{customerName}")]
@@ -49,14 +60,24 @@ namespace Architecturee.Controllers
             Customer customer = _customerRepo.getCustomerByClientName(customerName);
             if (customer == null)
                 return NotFound();
+
             else
             {
                 List<Account> accounts = _accountRepo.getAccountsByCustomer(customer);
-                return Ok(accounts);
+
+                var options = new JsonSerializerOptions
+                {
+                    ReferenceHandler = ReferenceHandler.Preserve,
+                    PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+                    WriteIndented = true
+                };
+
+                string json = JsonSerializer.Serialize(accounts, options);
+                return Ok(json);
             }
         }
 
-        [HttpPost("{amount}")]
+        [HttpPut("Debit/{amount}")]
         public IActionResult DebitAccount(int amount, [FromBody] Guid accountId)
         {
             Account account = _accountRepo.getAccountById(accountId);
@@ -74,6 +95,7 @@ namespace Architecturee.Controllers
             else
                 _accountRepo.Debit(amount, account);
         }
+
     }
 
 }
