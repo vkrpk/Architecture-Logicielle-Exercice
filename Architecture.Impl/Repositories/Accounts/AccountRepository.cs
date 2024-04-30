@@ -46,13 +46,33 @@ namespace Architecture.Impl.Repositories
             return _context.Accounts?.ToList();
         }
 
-        public Account createAccount(Customer customer, bool isOverdraftAllowed)
+        public Account createAccount(Account account)
         {
             Account newAccount;
-            if (isOverdraftAllowed)
-                newAccount = new OverdraftAccount { Customer = customer };
+            if (account.IsOverdraftAllowed)
+            {
+                newAccount = new OverdraftAccount
+                {
+                    Balance = account.Balance,
+                    AccountNumber = account.AccountNumber,
+                    IsOverdraftAllowed = account.IsOverdraftAllowed,
+                    CustomerId = account.CustomerId,
+                    BankId = account.BankId
+                };
+
+            }
             else
-                newAccount = new NoOverdraftAccount { Customer = customer };
+            {
+                newAccount = new NoOverdraftAccount
+                {
+                    Balance = account.Balance,
+                    AccountNumber = account.AccountNumber,
+                    IsOverdraftAllowed = account.IsOverdraftAllowed,
+                    CustomerId = account.CustomerId,
+                    BankId = account.BankId
+                };
+
+            }
 
             EntityEntry<Account> createdAccount = _context.Accounts.Add(newAccount);
             _context.SaveChanges();
@@ -64,10 +84,10 @@ namespace Architecture.Impl.Repositories
         {
             var entity = await _context.Accounts.FindAsync(account.Id);
             _context.Entry(entity).CurrentValues.SetValues(account);
-            EntityEntry<Account> updatedAccount = _context.Accounts.Update(account);
+            Account updatedAccount = _context.Accounts.Update(account).Entity;
             await _context.SaveChangesAsync();
 
-            return updatedAccount.Entity;
+            return updatedAccount;
         }
 
         public string deleteAccount(Guid accountId)

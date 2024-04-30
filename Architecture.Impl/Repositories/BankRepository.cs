@@ -1,4 +1,5 @@
 ﻿using Architecture.Domain.Models;
+using System.Security.Principal;
 
 namespace Architecture.Impl.Repositories
 {
@@ -19,7 +20,7 @@ namespace Architecture.Impl.Repositories
 
             if (account.Customer.Name == clientName)
             {
-               _accountRepository.Debit(amount, account);
+                _accountRepository.Debit(amount, account);
             }
         }
 
@@ -36,9 +37,26 @@ namespace Architecture.Impl.Repositories
         public void AccountOpening(string clientName, bool isOverdraftAllowed)
         {
             Customer customer = _customerRepository.getCustomerByClientName(clientName);
-            if (customer != null) 
+            if (customer != null)
             {
-                _accountRepository.createAccount(customer, isOverdraftAllowed);
+                if (isOverdraftAllowed)
+                {
+                    _accountRepository.createAccount(
+                        new OverdraftAccount
+                        {
+                            IsOverdraftAllowed = isOverdraftAllowed,
+                            CustomerId = customer.Id
+                        });
+                }
+                else
+                {
+                    _accountRepository.createAccount(
+                        new NoOverdraftAccount
+                        {
+                            IsOverdraftAllowed = isOverdraftAllowed,
+                            CustomerId = customer.Id
+                        });
+                }
             }
         }
 

@@ -8,7 +8,7 @@ namespace Architecture.Impl.Repositories
         Account getAccountByNumber(Guid accountNumber);
         List<Account> getAllAccounts();
         List<Account> getAccountsByCustomer(Customer customer);
-        Account createAccount(Customer customer, bool isOverdraftAllowed);
+        Account createAccount(Account account);
         Task<Account> updateAccount(Account account);
         string deleteAccount(Guid accountId);
         int Debit(int amount, Account account);
