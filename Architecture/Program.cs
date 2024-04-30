@@ -59,10 +59,7 @@ internal class Program
                 {
                     var services = scope.ServiceProvider;
                     var ctx = services.GetRequiredService<AppDbContext>();
-                    if (ctx.Database.CanConnect())
-                    {
-                        await ctx.Database.MigrateAsync();
-                    }
+                    await ctx.Database.MigrateAsync();
                 }
             }
             catch (Exception ex)
