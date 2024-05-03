@@ -80,6 +80,8 @@ internal class Program
             pattern: "{controller=Home}/{action=Index}/{id?}"
         );
 
+        await SeedInitData(app);
+        
         app.Run();
 
         async Task SeedInitData(WebApplication app)
