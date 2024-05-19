@@ -1,11 +1,13 @@
 ﻿using Architecture.Domain.Models;
 using Architecture.Impl.Repositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace Architecturee.Controllers
 {
+    //[Authorize]
     [ApiController]
     [Route("/api/[controller]")]
     public class AccountController : Controller
@@ -22,6 +24,7 @@ namespace Architecturee.Controllers
             _customerRepo = customerRepo;
         }
 
+        [Authorize]
         [HttpGet]
         public IActionResult GetAccounts()
         {
@@ -33,6 +36,7 @@ namespace Architecturee.Controllers
             return Ok(accounts);
         }
 
+        [Authorize]
         [HttpGet("{accountId}")]
         public IActionResult GetAccountById(Guid accountId)
         {
@@ -53,6 +57,7 @@ namespace Architecturee.Controllers
             return Ok(json);
         }
 
+        [Authorize]
         [HttpGet("byCustomer/{customerName}")]
         public IActionResult GetAccountsByCustomer(string customerName)
         {
@@ -76,6 +81,7 @@ namespace Architecturee.Controllers
             }
         }
 
+        [Authorize]
         [HttpPost]
         public IActionResult CreateAccount(Account account)
         {
@@ -97,6 +103,7 @@ namespace Architecturee.Controllers
 
             return Ok(json);
         }
+        [Authorize]
         [HttpPut]
         public async Task<IActionResult> UpdateAccount(Account account)
         {
@@ -119,12 +126,14 @@ namespace Architecturee.Controllers
             return Ok(json);
         }
 
+        [Authorize]
         [HttpDelete]
         public void DeleteAccount(Guid id)
         {
             _accountRepo.deleteAccount(id);
         }
 
+        [Authorize]
         [HttpPut("Debit/{amount}")]
         public IActionResult DebitAccount(int amount, [FromBody] Guid accountId)
         {
@@ -135,6 +144,7 @@ namespace Architecturee.Controllers
                 DebitAccount<NoOverdraftAccount>(amount, account);
             return Ok(account);
         }
+        [Authorize]
         [HttpPut("Credit/{amount}")]
         public IActionResult CreditAccount(int amount, [FromBody] Guid accountId)
         {

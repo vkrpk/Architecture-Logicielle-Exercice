@@ -1,9 +1,13 @@
 using Architecture.Domain.Models;
 using Architecture.Impl.EFDatabase;
 using Architecture.Impl.Repositories;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Text;
 
 internal class Program
 {
@@ -38,6 +42,43 @@ internal class Program
         builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString));
 
+        builder.Services.AddAuthentication(options =>
+        {
+            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        }).AddJwtBearer(o =>
+        {
+            o.TokenValidationParameters = new TokenValidationParameters
+            {
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+                IssuerSigningKey = new SymmetricSecurityKey
+                (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SigningKey"])),
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = false,
+                ValidateIssuerSigningKey = true
+            };
+            o.Events = new JwtBearerEvents
+            {
+                OnAuthenticationFailed = context =>
+                {
+                    Console.WriteLine("Authentication failed: " + context.Exception.Message);
+                    return Task.CompletedTask;
+                },
+                OnTokenValidated = context =>
+                {
+                    Console.WriteLine("Token validated: " + context.SecurityToken);
+                    return Task.CompletedTask;
+                },
+                OnChallenge = context =>
+                {
+                    Console.WriteLine("OnChallenge error: " + context.Error + ", " + context.ErrorDescription);
+                    return Task.CompletedTask;
+                }
+            };
+        });
 
         builder.Services.AddControllers();
         builder.Services.AddSwaggerGen(c =>
@@ -73,12 +114,14 @@ internal class Program
 
         app.UseRouting();
 
+        app.UseAuthentication();
         app.UseAuthorization();
 
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}"
         );
+            //.RequireAuthorization();
 
         await SeedInitData(app);
         
@@ -138,6 +181,13 @@ internal class Program
                                 Name = "Fourth Client",
                                 BankId = ctx.Banks.First().Id
                             },
+                            new Customer()
+                            {
+                                ClientNumber = "clientNumber500000",
+                                Address = "Test Address 5",
+                                Name = "test@test.fr",
+                                BankId = ctx.Banks.First().Id
+                            }
                         };
                         ctx.Customers.AddRange(customers);
                         await ctx.SaveChangesAsync();

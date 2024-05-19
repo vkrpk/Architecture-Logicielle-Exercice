@@ -3,9 +3,11 @@ using Architecture.Impl.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json.Serialization;
 using System.Text.Json;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Architecture.Controllers;
 
+//[Authorize]
 [ApiController]
 [Route("/api/[controller]")]
 public class CustomerController : Controller
@@ -17,6 +19,7 @@ public class CustomerController : Controller
         _customerRepository = customerRepository;
     }
 
+    [Authorize]
     [HttpGet("{customerId}")]
     public IActionResult GetCustomerById(Guid customerId)
     {
@@ -39,6 +42,7 @@ public class CustomerController : Controller
 
     }
 
+    [Authorize]
     [HttpGet("byName/{clientName}")]
     public IActionResult GetCustomerByName(string clientName)
     {
@@ -61,6 +65,7 @@ public class CustomerController : Controller
         return Ok(json);
     }
 
+    [Authorize]
     [HttpGet]
     public IActionResult GetAllCustomers()
     {
@@ -74,6 +79,7 @@ public class CustomerController : Controller
         return Ok(customerArray);
     }
 
+    [Authorize]
     [HttpPost]
     public IActionResult CreateCustomer(Customer customer)
     {
@@ -96,6 +102,7 @@ public class CustomerController : Controller
         return Ok(json);
     }
 
+    [Authorize]
     [HttpPut("{customerId}")]
     public IActionResult UpdateCustomer(Customer customer)
     {
@@ -118,6 +125,7 @@ public class CustomerController : Controller
         return Ok(json);
     }
 
+    [Authorize]
     [HttpDelete("{customerId}")]
     public IActionResult DeleteCustomer(Guid customerId)
     {
