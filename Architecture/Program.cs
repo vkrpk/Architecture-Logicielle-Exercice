@@ -42,11 +42,15 @@ internal class Program
         builder.Services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString));
 
+        // Add services to the container
+        var jwtSettings = builder.Configuration.GetSection("Jwt");
+
+
         builder.Services.AddAuthentication(options =>
         {
             options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
             options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            //options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
         }).AddJwtBearer(o =>
         {
             o.TokenValidationParameters = new TokenValidationParameters
@@ -57,7 +61,7 @@ internal class Program
                 (Encoding.UTF8.GetBytes(builder.Configuration["Jwt:SigningKey"])),
                 ValidateIssuer = true,
                 ValidateAudience = true,
-                ValidateLifetime = false,
+                ValidateLifetime = true,
                 ValidateIssuerSigningKey = true
             };
             o.Events = new JwtBearerEvents
