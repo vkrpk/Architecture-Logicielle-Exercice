@@ -43,6 +43,7 @@ internal class Program
             options.UseSqlServer(connectionString));
 
         // Add services to the container
+        builder.Services.AddControllers();
         var jwtSettings = builder.Configuration.GetSection("Jwt");
 
 

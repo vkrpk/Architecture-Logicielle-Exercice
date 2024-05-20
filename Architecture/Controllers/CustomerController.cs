@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace Architecture.Controllers;
 
-//[Authorize]
+
 [ApiController]
 [Route("/api/[controller]")]
 public class CustomerController : Controller
@@ -65,7 +65,7 @@ public class CustomerController : Controller
         return Ok(json);
     }
 
-    [Authorize]
+    //[Authorize]
     [HttpGet]
     public IActionResult GetAllCustomers()
     {

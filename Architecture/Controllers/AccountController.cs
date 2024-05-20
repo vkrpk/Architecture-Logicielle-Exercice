@@ -7,7 +7,7 @@ using System.Text.Json.Serialization;
 
 namespace Architecturee.Controllers
 {
-    //[Authorize]
+    
     [ApiController]
     [Route("/api/[controller]")]
     public class AccountController : Controller
