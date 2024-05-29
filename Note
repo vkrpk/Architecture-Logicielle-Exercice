@@ -1,0 +1,28 @@
+Ce qu'il faillait faire 
+ListeDesComptes de la banque.
+ListeDesComptes du client.
+
+Qualité du lien Git : 0.5 / 1
+Trello et Qualité de l'information : 1 /1 
+Pull OK et compilation : 1 / 1
+Qualité des commentaires lors des push : 0,5 / 1
+TU présents : 1,5 / 2
+TI présents : 1,5 / 3
+Qualité et fonctionnement des TU : 0,5 / 2
+Qualité et fonctionnement des TI : 0,5 / 2
+Architecture MVC : 1 / 1 
+Présence de Mock : 1 / 2
+Création de WS : 1 / 1
+Clean code : 0,5 / 1
+Documentation : 1 / 1 
+Bonus Commit 20.05 : 0,5 / 1
+
+Note intérmédiaire du 20.05 : 12 / 20
+Note intermédiaire du 30/04 : 11.5 / 20
+
+NOTE FINALE : 12/20
+
+Remarques:
+Un bon départ et de bonnes choses, pour autant je pense que les tests sont trop léger et j'ai eu du mal à faire tout fonctionner.
+
+
